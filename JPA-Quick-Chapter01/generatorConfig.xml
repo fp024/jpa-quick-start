@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="myBatis3Simple" >
+		<!-- 자동생성 주석 금지  targetRuntime="MyBatis3Simple" -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+	
+		<jdbcConnection connectionURL="jdbc:mysql://192.168.100.10/jpa_test"
+			driverClass="com.mysql.cj.jdbc.Driver"
+			password="jpa_test"
+			userId="jpa_test" 
+		/>
+
+		<!-- Java 도메인 모델 생성 -->
+		<javaModelGenerator
+			targetPackage="org.fp024.jpaquick.persistence.jdbc" 
+			targetProject="JPA-Quick-Chapter01/src/main/java"	
+		>
+		</javaModelGenerator>
+
+		<!-- 메퍼 XML 생성 -->
+		<sqlMapGenerator 
+			targetPackage="mappings"
+			targetProject="JPA-Quick-Chapter01/src/main/resources" 
+		/>
+
+		<!-- 메퍼 인터페이스 (레파지토리 인터페이스 )-->
+		<javaClientGenerator type="XMLMAPPER" 
+			targetPackage="org.fp024.jpaquick.persistence.jdbc" 
+			targetProject="JPA-Quick-Chapter01/src/main/java"
+		/>
+
+		<!-- 타켓 테이블  -->
+		<table 
+			tableName="s_emp"
+			domainObjectName="EmployeeVO"
+			mapperName="EmployeeDAOMyBatis"  
+		>
+			<columnOverride column="id" property="id" jdbcType='DOUBLE' javaType='java.lang.Long'/>
+			
+			
+		</table>
+
+
+	</context>
+	
+	
+</generatorConfiguration>

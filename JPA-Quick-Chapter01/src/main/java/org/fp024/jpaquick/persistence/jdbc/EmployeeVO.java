@@ -2,6 +2,8 @@ package org.fp024.jpaquick.persistence.jdbc;
 
 import java.util.Date;
 
+import javax.annotation.processing.Generated;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,22 +12,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class EmployeeVO {
-	/** 직원 아이디 */
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	private Long id;
-
-	/** 직원 이름 */
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	private String name;
-
-	/** 입사일 */
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	private Date startDate;
-
-	/** 직급 */
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	private String title;
-
-	/** 부서 이름 */
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	private String deptName;
-
-	/** 급여 */
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	private Double salary;
-
 }

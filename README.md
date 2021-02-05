@@ -2,7 +2,7 @@
 
 ## JPA 퀵스타트 도서의 스터디/실습 진행. (저자: 채규태 님)
 
-* [yes24 도서 판매 페이지 링크] (http://www.yes24.com/Product/Goods/92287236)
+* [yes24 도서 판매 페이지 링크](http://www.yes24.com/Product/Goods/92287236)
 
 ## 책 진행과 다르게 하는 부분
 * h2 대신 MySQL 8.2 DB사용

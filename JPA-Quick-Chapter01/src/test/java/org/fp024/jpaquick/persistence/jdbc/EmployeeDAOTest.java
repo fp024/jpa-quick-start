@@ -1,17 +1,24 @@
 package org.fp024.jpaquick.persistence.jdbc;
 
+import static org.junit.Assert.assertFalse;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-public class EmployeeServiceClient {
-	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceClient.class);
+import lombok.extern.slf4j.Slf4j;
 
-	public static void main(String[] args) {
+@Slf4j
+@RunWith(JUnit4.class)
+public class EmployeeDAOTest {
+
+	@Test
+	public void testEmployDAO() {
 		EmployeeVO vo = new EmployeeVO();
 		vo.setName("홍길동");
 		vo.setStartDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
@@ -24,7 +31,10 @@ public class EmployeeServiceClient {
 
 		List<EmployeeVO> employList = employDAO.getEmployeeList();
 
-		employList.forEach(user -> LOGGER.info("---> {}", user));
+		employList.forEach(user -> logger.info("---> {}", user));
+
+		assertFalse(employList.isEmpty());
 
 	}
+
 }

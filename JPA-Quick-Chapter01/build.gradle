@@ -21,6 +21,9 @@ targetCompatibility = 11
 
 compileJava.options.encoding = 'UTF-8'
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.

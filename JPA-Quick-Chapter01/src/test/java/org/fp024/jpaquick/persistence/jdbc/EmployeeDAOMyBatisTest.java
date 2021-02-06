@@ -76,6 +76,7 @@ public class EmployeeDAOMyBatisTest {
 		vo.setTitle("시니어");
 		vo.setStartDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 		vo.setSalary(9000.99);
+		vo.setEmail("google@google.com");
 
 		// 먼저 입력할 사용자 이름으로 삭제
 		DeleteStatementProvider deleteStatement = deleteFrom(employeeVO).where(name, isEqualTo(vo.getName())).build()

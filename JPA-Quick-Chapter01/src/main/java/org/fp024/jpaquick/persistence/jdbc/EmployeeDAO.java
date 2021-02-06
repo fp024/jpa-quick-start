@@ -20,15 +20,15 @@ public class EmployeeDAO {
 
 	// S_EMP 테이블 관련 SQL 구문
 
-	private final String INSERT_EMP = "INSERT INTO s_emp (id, name, start_date, title, dept_name, salary) "
-			+ "VALUES ((SELECT IFNULL(MAX(id), 0) + 1 FROM s_emp AS temp), ?, ?, ?, ?, ?)";
+	private final String INSERT_EMP = "INSERT INTO s_emp (id, name, start_date, title, dept_name, salary, email) "
+			+ "VALUES ((SELECT IFNULL(MAX(id), 0) + 1 FROM s_emp AS temp), ?, ?, ?, ?, ?, ?)";
 
 	/*
 		INSERT 할 테이블에 대해 조회하는 코드가 들어가면
 		You can't specify target table 테이블명 for update in FROM clause  이런 오류가 생긴다.
 		해당 FROM 테이블에 별칭을 붙여주면 해결됨.
 	*/
-	private final String LIST_EMP = "SELECT id, name, start_date, title, dept_name, salary "
+	private final String LIST_EMP = "SELECT id, name, start_date, title, dept_name, salary, email "
   								  + "FROM s_emp ORDER BY name";  
 
 	// 회원등록 기능
@@ -43,6 +43,7 @@ public class EmployeeDAO {
 			stmt.setString(3, vo.getTitle());
 			stmt.setString(4, vo.getDeptName());
 			stmt.setDouble(5, vo.getSalary());
+			stmt.setString(6, vo.getEmail());
 			stmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -69,6 +70,7 @@ public class EmployeeDAO {
 				employee.setTitle(rs.getString("title"));
 				employee.setDeptName(rs.getString("dept_name"));
 				employee.setSalary(rs.getDouble("salary"));
+				employee.setEmail(rs.getString("email"));
 				employeeList.add(employee);
 			}
 		} catch (Exception e) {

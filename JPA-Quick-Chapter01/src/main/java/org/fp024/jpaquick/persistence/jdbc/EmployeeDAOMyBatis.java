@@ -1,6 +1,7 @@
 package org.fp024.jpaquick.persistence.jdbc;
 
 import static org.fp024.jpaquick.persistence.jdbc.EmployeeVODynamicSqlSupport.deptName;
+import static org.fp024.jpaquick.persistence.jdbc.EmployeeVODynamicSqlSupport.email;
 import static org.fp024.jpaquick.persistence.jdbc.EmployeeVODynamicSqlSupport.employeeVO;
 import static org.fp024.jpaquick.persistence.jdbc.EmployeeVODynamicSqlSupport.id;
 import static org.fp024.jpaquick.persistence.jdbc.EmployeeVODynamicSqlSupport.name;
@@ -44,7 +45,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 public interface EmployeeDAOMyBatis {
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
-	BasicColumn[] selectList = BasicColumn.columnList(id, name, startDate, title, deptName, salary);
+	BasicColumn[] selectList = BasicColumn.columnList(id, name, startDate, title, deptName, salary, email);
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	@SelectProvider(type = SqlProviderAdapter.class, method = "select")
@@ -70,12 +71,13 @@ public interface EmployeeDAOMyBatis {
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	@SelectProvider(type = SqlProviderAdapter.class, method = "select")
 	@Results(id = "EmployeeVOResult", value = {
-			@Result(column = "id", property = "id", jdbcType = JdbcType.DOUBLE, id = true),
+			@Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
 			@Result(column = "name", property = "name", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "start_date", property = "startDate", jdbcType = JdbcType.TIMESTAMP),
 			@Result(column = "title", property = "title", jdbcType = JdbcType.VARCHAR),
 			@Result(column = "dept_name", property = "deptName", jdbcType = JdbcType.VARCHAR),
-			@Result(column = "salary", property = "salary", jdbcType = JdbcType.DOUBLE) })
+			@Result(column = "salary", property = "salary", jdbcType = JdbcType.DOUBLE),
+			@Result(column = "email", property = "email", jdbcType = JdbcType.VARCHAR) })
 	List<EmployeeVO> selectMany(SelectStatementProvider selectStatement);
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -102,7 +104,7 @@ public interface EmployeeDAOMyBatis {
 		return MyBatis3Utils.insert(this::insert, record, employeeVO,
 				c -> c.map(id).toProperty("id").map(name).toProperty("name").map(startDate).toProperty("startDate")
 						.map(title).toProperty("title").map(deptName).toProperty("deptName").map(salary)
-						.toProperty("salary"));
+						.toProperty("salary").map(email).toProperty("email"));
 	}
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -110,7 +112,7 @@ public interface EmployeeDAOMyBatis {
 		return MyBatis3Utils.insertMultiple(this::insertMultiple, records, employeeVO,
 				c -> c.map(id).toProperty("id").map(name).toProperty("name").map(startDate).toProperty("startDate")
 						.map(title).toProperty("title").map(deptName).toProperty("deptName").map(salary)
-						.toProperty("salary"));
+						.toProperty("salary").map(email).toProperty("email"));
 	}
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -121,7 +123,8 @@ public interface EmployeeDAOMyBatis {
 						.toPropertyWhenPresent("startDate", record::getStartDate).map(title)
 						.toPropertyWhenPresent("title", record::getTitle).map(deptName)
 						.toPropertyWhenPresent("deptName", record::getDeptName).map(salary)
-						.toPropertyWhenPresent("salary", record::getSalary));
+						.toPropertyWhenPresent("salary", record::getSalary).map(email)
+						.toPropertyWhenPresent("email", record::getEmail));
 	}
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -153,37 +156,38 @@ public interface EmployeeDAOMyBatis {
 	static UpdateDSL<UpdateModel> updateAllColumns(EmployeeVO record, UpdateDSL<UpdateModel> dsl) {
 		return dsl.set(id).equalTo(record::getId).set(name).equalTo(record::getName).set(startDate)
 				.equalTo(record::getStartDate).set(title).equalTo(record::getTitle).set(deptName)
-				.equalTo(record::getDeptName).set(salary).equalTo(record::getSalary);
+				.equalTo(record::getDeptName).set(salary).equalTo(record::getSalary).set(email)
+				.equalTo(record::getEmail);
 	}
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	static UpdateDSL<UpdateModel> updateSelectiveColumns(EmployeeVO record, UpdateDSL<UpdateModel> dsl) {
 		return dsl.set(id).equalToWhenPresent(record::getId).set(name).equalToWhenPresent(record::getName)
 				.set(startDate).equalToWhenPresent(record::getStartDate).set(title).equalToWhenPresent(record::getTitle)
-				.set(deptName).equalToWhenPresent(record::getDeptName).set(salary)
-				.equalToWhenPresent(record::getSalary);
+				.set(deptName).equalToWhenPresent(record::getDeptName).set(salary).equalToWhenPresent(record::getSalary)
+				.set(email).equalToWhenPresent(record::getEmail);
 	}
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	default int updateByPrimaryKey(EmployeeVO record) {
 		return update(c -> c.set(name).equalTo(record::getName).set(startDate).equalTo(record::getStartDate).set(title)
 				.equalTo(record::getTitle).set(deptName).equalTo(record::getDeptName).set(salary)
-				.equalTo(record::getSalary).where(id, isEqualTo(record::getId)));
+				.equalTo(record::getSalary).set(email).equalTo(record::getEmail).where(id, isEqualTo(record::getId)));
 	}
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	default int updateByPrimaryKeySelective(EmployeeVO record) {
 		return update(c -> c.set(name).equalToWhenPresent(record::getName).set(startDate)
 				.equalToWhenPresent(record::getStartDate).set(title).equalToWhenPresent(record::getTitle).set(deptName)
-				.equalToWhenPresent(record::getDeptName).set(salary).equalToWhenPresent(record::getSalary)
-				.where(id, isEqualTo(record::getId)));
+				.equalToWhenPresent(record::getDeptName).set(salary).equalToWhenPresent(record::getSalary).set(email)
+				.equalToWhenPresent(record::getEmail).where(id, isEqualTo(record::getId)));
 	}
 
 	/**
-	 * myBatis DSL로 어떻게 표현할지 모르겠음. ㅠㅠ... 일단 쿼리 넣어서 돌려봄.
+	 * ID부분에 키 쿼리를 어떤식으로 표현해야할지 모르겠다. ㅠㅠ, 추후 해보자
 	 */
-	@Insert({ "INSERT INTO s_emp (id, name, start_date, title, dept_name, salary) ",
-			"VALUES ((SELECT IFNULL(MAX(id), 0) + 1 FROM s_emp AS temp), #{name}, #{startDate}, #{title}, #{deptName}, #{salary})" })
+	@Insert({ "INSERT INTO s_emp (id, name, start_date, title, dept_name, salary, email) ",
+			"VALUES ((SELECT IFNULL(MAX(id), 0) + 1 FROM s_emp AS temp), #{name}, #{startDate}, #{title}, #{deptName}, #{salary}, #{email})" })
 	void insertQuery(EmployeeVO vo);
 
 }

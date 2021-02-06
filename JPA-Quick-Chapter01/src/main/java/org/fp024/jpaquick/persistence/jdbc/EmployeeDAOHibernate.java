@@ -39,6 +39,7 @@ public class EmployeeDAOHibernate {
 		return configuration.buildSessionFactory();
 	}
 	
+	@SuppressWarnings("unused")
 	private SessionFactory xmlConfig() {
 		String config = "persistence/hibernate.cfg.xml";
 		Configuration configuration = new Configuration().configure(config);

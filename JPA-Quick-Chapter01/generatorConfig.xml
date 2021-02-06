@@ -2,6 +2,8 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<context id="myBatis3Simple" >
+		<property name="javaFileEncoding" value="UTF-8"/>
+	
 		<!-- 자동생성 주석 금지  targetRuntime="MyBatis3Simple" -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
@@ -13,12 +15,13 @@
 			userId="jpa_test" 
 		/>
 
-		<!-- Java 도메인 모델 생성 -->
+		<!-- Java 도메인 모델 생성 --> 
 		<javaModelGenerator
 			targetPackage="org.fp024.jpaquick.persistence.jdbc" 
 			targetProject="JPA-Quick-Chapter01/src/main/java"	
 		>
 		</javaModelGenerator>
+		
 
 		<!-- 메퍼 XML 생성 -->
 		<sqlMapGenerator 
@@ -38,12 +41,9 @@
 			domainObjectName="EmployeeVO"
 			mapperName="EmployeeDAOMyBatis"  
 		>
-			<columnOverride column="id" property="id" jdbcType='DOUBLE' javaType='java.lang.Long'/>
-			
+			<columnOverride column="id" property="id" jdbcType='BIGINT' javaType='java.lang.Long'/>
 			
 		</table>
-
-
 	</context>
 	
 	

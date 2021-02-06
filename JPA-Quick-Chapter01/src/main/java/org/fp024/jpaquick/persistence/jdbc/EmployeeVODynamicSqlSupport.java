@@ -24,15 +24,18 @@ public final class EmployeeVODynamicSqlSupport {
 	public static final SqlColumn<String> deptName = employeeVO.deptName;
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	public static final SqlColumn<Double> salary = employeeVO.salary;
+	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	public static final SqlColumn<String> email = employeeVO.email;
 
 	@Generated("org.mybatis.generator.api.MyBatisGenerator")
 	public static final class EmployeeVO extends SqlTable {
-		public final SqlColumn<Long> id = column("id", JDBCType.DOUBLE);
+		public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 		public final SqlColumn<String> name = column("name", JDBCType.VARCHAR);
 		public final SqlColumn<Date> startDate = column("start_date", JDBCType.TIMESTAMP);
 		public final SqlColumn<String> title = column("title", JDBCType.VARCHAR);
 		public final SqlColumn<String> deptName = column("dept_name", JDBCType.VARCHAR);
 		public final SqlColumn<Double> salary = column("salary", JDBCType.DOUBLE);
+		public final SqlColumn<String> email = column("email", JDBCType.VARCHAR);
 
 		public EmployeeVO() {
 			super("s_emp");

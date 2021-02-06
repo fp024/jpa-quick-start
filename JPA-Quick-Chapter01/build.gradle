@@ -33,9 +33,13 @@ dependencies {
     implementation 'com.google.guava:guava:30.1-jre'
 	implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.2.1'
 	implementation 'org.mybatis:mybatis:3.5.6'
-	//implementation 'org.slf4j:slf4j-api:1.7.25'
+	//implementation 'org.slf4j:slf4j-api:1.7.25' // log4j-slf4j-impl 만 설정하면 디펜던시에 포함됨
  	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.0'
 	implementation 'mysql:mysql-connector-java:8.0.21'
+	
+	implementation 'org.hibernate:hibernate-entitymanager:5.4.27.Final'
+	
+	
 
     testImplementation 'junit:junit:4.13.1'
     

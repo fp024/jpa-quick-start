@@ -2,7 +2,10 @@ package org.fp024.jpaquick.persistence.jdbc;
 
 import java.util.Date;
 
-import javax.annotation.processing.Generated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,17 +14,23 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "s_emp")
 public class EmployeeVO {
-	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	@Id
 	private Long id;
-	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	
 	private String name;
-	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	
+	@Column(name="start_date")
 	private Date startDate;
-	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	
 	private String title;
-	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	
+	@Column(name="dept_name")
 	private String deptName;
-	@Generated("org.mybatis.generator.api.MyBatisGenerator")
+	
 	private Double salary;
+	
+	private String email;
 }

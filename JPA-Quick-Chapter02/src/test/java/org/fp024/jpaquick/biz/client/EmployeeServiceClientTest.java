@@ -2,7 +2,7 @@ package org.fp024.jpaquick.biz.client;
 
 import static org.junit.Assert.fail;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,7 +33,7 @@ public class EmployeeServiceClientTest {
 			employee.setId(2L);
 			employee.setName("둘리");
 			employee.setMailId("gurum");
-			employee.setStartDate(LocalDateTime.now());
+			employee.setStartDate(LocalDate.now());
 			employee.setTitle("과장");
 			employee.setDeptName("총무부");
 			employee.setSalary(2500.00);

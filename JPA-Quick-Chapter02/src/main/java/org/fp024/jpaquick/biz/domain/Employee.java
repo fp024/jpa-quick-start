@@ -1,10 +1,12 @@
 package org.fp024.jpaquick.biz.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
@@ -18,8 +20,10 @@ import lombok.ToString;
 @Table(name = "s_emp", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "mailId" }) })
 public class Employee {
 	@Id
+	@Column(length = 7, nullable = false)
 	private Long id;
 
+	@Column(length = 25, nullable = false)
 	private String name;
 
 	/**
@@ -29,17 +33,34 @@ public class Employee {
 	 * 자동으로 스네이크케이스로 변환해서 저장하려면
 	 * https://thorben-janssen.com/naming-strategies-in-hibernate-5/
 	 */
+	@Column(length = 8, unique = true)
 	private String mailId;
 
-	/** hibernate-core 5.2.10 이상부터는 LocalDateTime을 직접 사용할 수 있다고 함. */
-	private LocalDateTime startDate;
+	/**
+	 * hibernate-core 5.2.10 이상부터는 LocalDateTime을 직접 사용할 수 있다고 함. LocalDateTime 이나
+	 * LocalDate에는 @Temporal 을 사용할 수 없음. 알맞은 타입을 직접 맞춰서 써야하는 거 같다.
+	 * 
+	 * LocalDate -> MySQL DATE (시간정보 저장하지 않는 컬럼타입) 
+	 * LocalDateTime -> MySQL DATETIME (시간정보 포함 컬럼타입)
+	 */
+	private LocalDate startDate;
 
+	@Column(length = 25)
 	private String title;
 
+	@Column(length = 30)
 	private String deptName;
 
+	@Column(precision = 11, scale = 2)
 	private Double salary;
 
-	/** 성과급 지급률 */
+	/** 성과급 지급률, MySQL 8에서 CHECK 제약조건 설정이 사용가능함. */
+	@Column(precision = 4, scale = 2, columnDefinition = "DOUBLE CHECK (commission_pct IN (10, 12.5, 15, 17.5, 20))")
 	private Double commissionPct;
+
+	@Transient
+	private String searchCondition;
+
+	@Transient
+	private String searchKeyword;
 }

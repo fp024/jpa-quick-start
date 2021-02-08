@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.fp024.jpaquick.biz.domain.Employee;
+import org.fp024.jpaquick.biz.domain.EmployeeId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -26,14 +27,20 @@ public class EmployeeServiceClientTest {
 		EntityTransaction tx = em.getTransaction();
 
 		try {
-			tx.begin();
-			Employee employee = new Employee();
-			employee.setName("직원1");
-			em.persist(employee);
-			tx.commit();
+//			tx.begin();
+//			// 회원등록 요청
+//			EmployeeId empId = new EmployeeId(1L, "guest123");
+//			
+//			Employee employee = new Employee();
+//			employee.setEmpId(empId);
+//			employee.setName("직원1");
+//			em.persist(employee);
+//			tx.commit();
 
+			EmployeeId empId = new EmployeeId(1L, "guest123");
+			
 			// 등록한 회원 검색
-			Employee foundEmployee = em.find(Employee.class, 1L);
+			Employee foundEmployee = em.find(Employee.class, empId);
 			logger.info("검색한 회원정보: {}", foundEmployee);
 
 		} catch (Exception e) {

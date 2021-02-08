@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,15 +20,18 @@ import lombok.ToString;
 @Entity
 //@Table(name = "s_emp", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "mailId" }) })
 @Table(name = "s_emp")
-@SequenceGenerator(
-			  name="s_emp_generator"
-			, sequenceName = "s_emp_sequence"
-		    , initialValue = 1
-		    , allocationSize = 50
-		)
+@TableGenerator(
+		  name="seq_generator"
+		, table="shopping_sequences"
+		, pkColumnName = "seq_name"
+		, pkColumnValue = "emp_seq"
+		, valueColumnName = "next_value"
+		, initialValue = 0
+		, allocationSize = 1
+)
 public class Employee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_emp_generator")
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_generator")
 	@Column(length = 7, nullable = false)
 	private Long id;
 

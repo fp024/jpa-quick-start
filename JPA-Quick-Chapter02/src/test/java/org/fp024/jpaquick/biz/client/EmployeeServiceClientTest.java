@@ -29,15 +29,10 @@ public class EmployeeServiceClientTest {
 		EntityTransaction tx = em.getTransaction();
 
 		try {
-
 			tx.begin();
-
-			for (int i = 1; i <= 100; i++) {
-				Employee employee = new Employee();
-				employee.setName("직원" + i);
-				em.persist(employee);
-			}
-
+			Employee employee = new Employee();
+			employee.setName("직원1");
+			em.persist(employee);
 			tx.commit();
 
 			// 등록한 회원 검색

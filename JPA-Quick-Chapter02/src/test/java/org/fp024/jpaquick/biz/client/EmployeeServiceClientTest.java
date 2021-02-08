@@ -2,9 +2,6 @@ package org.fp024.jpaquick.biz.client;
 
 import static org.junit.Assert.fail;
 
-import java.time.LocalDate;
-import java.util.Iterator;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;

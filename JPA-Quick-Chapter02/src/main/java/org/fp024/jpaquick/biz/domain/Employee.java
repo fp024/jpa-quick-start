@@ -20,18 +20,9 @@ import lombok.ToString;
 @Entity
 //@Table(name = "s_emp", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "mailId" }) })
 @Table(name = "s_emp")
-@TableGenerator(
-		  name="seq_generator"
-		, table="shopping_sequences"
-		, pkColumnName = "seq_name"
-		, pkColumnValue = "emp_seq"
-		, valueColumnName = "next_value"
-		, initialValue = 0
-		, allocationSize = 1
-)
 public class Employee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq_generator")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 7, nullable = false)
 	private Long id;
 

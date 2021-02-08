@@ -22,7 +22,9 @@
 				value="org.hibernate.dialect.MySQL8Dialect" />
 				<!-- 
 					MySQLDialect 라고 쓰면 테이블 생성시 type=MyISAM" 이 내용을 붙이는데, MySQL 8.0에서는 오류가난다. 
-					MySQL8Dialect 로실행하면  engine=InnoDB 으로 테이블을 생성한다.
+					MySQL8Dialect 로 실행하면  engine=InnoDB 으로 테이블을 생성한다.
+					
+					type=MyISAM 설정이 MySQL 4.0부터 사용 되지 않게되었고, 5.5에는 제거되었다고 함.
 				-->
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />

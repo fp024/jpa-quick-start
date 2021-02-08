@@ -34,22 +34,10 @@ public class EmployeeServiceClientTest {
             // 직원등록 --> 관리상태로 전환
             em.persist(employee);
 
-            if (em.contains(employee)) {
-                logger.info("{} MANAGED", employee);
-            }
+            // 엔티티 삭제
+            em.remove(employee);
 
-            // 1번 직원 엔티티를 분리 상채로 전환
-            em.detach(employee);
-
-            if (!em.contains(employee)) {
-                logger.info("{} DETACHED", employee);
-            }
-
-            // 분리상태의 엔티티 수정
-            employee.setName("이름 수정");
             tx.commit();
-
-            logger.info("최종 직원 정보: {}", employee);
         } catch (Exception e) {
             tx.rollback();
             logger.error(e.getMessage(), e);

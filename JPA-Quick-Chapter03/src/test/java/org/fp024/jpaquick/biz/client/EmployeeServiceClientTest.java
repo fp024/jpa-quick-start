@@ -27,12 +27,19 @@ public class EmployeeServiceClientTest {
             Employee employee = new Employee();
             employee.setName("둘리");
 
+            // 직원등록
             tx.begin();
-
-            // 직원등록 --> 관리상태로 전환
             em.persist(employee);
+            tx.commit();
 
-//            tx.commit();
+            // 직원 검색
+            Employee employee1 = em.find(Employee.class, 1L);
+            Employee employee2 = em.find(Employee.class, 1L);
+
+            if (employee1 == employee2) {
+                logger.info("검색한 두 객체는 동일한 객체다.");
+            }
+
         } catch (Exception e) {
             tx.rollback();
             logger.error(e.getMessage(), e);

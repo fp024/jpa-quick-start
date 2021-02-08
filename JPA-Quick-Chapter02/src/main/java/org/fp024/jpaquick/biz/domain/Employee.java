@@ -2,6 +2,8 @@ package org.fp024.jpaquick.biz.domain;
 
 import java.time.LocalDate;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,15 +11,16 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude= {"searchCondition", "searchKeyword"})
 @Entity
 @Table(name = "s_emp", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "mailId" }) })
+@Access(AccessType.FIELD)
 public class Employee {
 	@Id
 	@Column(length = 7, nullable = false)

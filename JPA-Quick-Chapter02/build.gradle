@@ -36,8 +36,6 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.21'
 	
 	implementation 'org.hibernate:hibernate-entitymanager:5.4.27.Final'
-	
-	
 
     testImplementation 'junit:junit:4.13.1'
     

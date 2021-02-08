@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -18,9 +19,15 @@ import lombok.ToString;
 @Entity
 //@Table(name = "s_emp", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "mailId" }) })
 @Table(name = "s_emp")
+@SequenceGenerator(
+			  name="s_emp_generator"
+			, sequenceName = "s_emp_sequence"
+		    , initialValue = 1
+		    , allocationSize = 1
+		)
 public class Employee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_emp_generator")
 	@Column(length = 7, nullable = false)
 	private Long id;
 

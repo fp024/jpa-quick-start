@@ -62,7 +62,7 @@ public class EmployeeServiceClientTest {
 			
 			
 			// 등록한 회원 검색
-			Employee foundEmployee = em.find(Employee.class, 2L);
+			Employee foundEmployee = em.find(Employee.class, 1L);
 			logger.info("검색한 회원정보: {}", foundEmployee);
 			
 

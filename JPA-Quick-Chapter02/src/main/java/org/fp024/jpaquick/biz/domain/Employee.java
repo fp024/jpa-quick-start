@@ -23,7 +23,7 @@ import lombok.ToString;
 			  name="s_emp_generator"
 			, sequenceName = "s_emp_sequence"
 		    , initialValue = 1
-		    , allocationSize = 1
+		    , allocationSize = 50
 		)
 public class Employee {
 	@Id

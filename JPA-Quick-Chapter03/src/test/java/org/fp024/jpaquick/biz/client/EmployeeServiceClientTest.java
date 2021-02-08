@@ -1,13 +1,16 @@
 package org.fp024.jpaquick.biz.client;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
-import javax.persistence.*;
-
-
 import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.Test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.FlushModeType;
+import javax.persistence.Persistence;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * https://www.baeldung.com/junit-5-runwith
@@ -24,25 +27,22 @@ public class EmployeeServiceClientTest {
         EntityTransaction tx = em.getTransaction();
 
         try {
+            // 직원 엔티티 등록
             Employee employee = new Employee();
-            employee.setName("털보가이");
+            employee.setName("둘리");
 
             tx.begin();
             em.persist(employee);
             tx.commit();
 
-            // 모든 엔티티를 분리 상태로 전환시킨다.
-            em.clear();
+            for (int i = 0; i < 30; i++) {
+                Thread.sleep(1000);
+                logger.info("다른 사용자가 데이터 수정중.... {}", i);
+            }
 
-            // 직원 엔티티 이름 수정
-            tx.begin();
-            employee.setName("탈보가이");
-            Employee employeeEmp = em.merge(employee);
-            tx.commit();
-
-            // 관리상태 여부 확인
-            logger.info("employee 관리: {}", em.contains(employee));
-            logger.info("employeeEmp 관리: {}", em.contains(employeeEmp));
+            // 엔티티 REFRESH
+            em.refresh(employee);
+            logger.info("갱신된 직원정보: {}", employee);
 
         } catch (Exception e) {
             tx.rollback();

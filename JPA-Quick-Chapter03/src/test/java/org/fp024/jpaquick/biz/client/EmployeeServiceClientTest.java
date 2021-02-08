@@ -21,33 +21,17 @@ public class EmployeeServiceClientTest {
     public void testPersistEmployee() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter03");
         EntityManager em = emf.createEntityManager();
-        em.setFlushMode(FlushModeType.COMMIT);
-
-        // 엔티티 트랜젝션 생성
-        EntityTransaction tx = em.getTransaction();
 
         try {
-            // 직원 엔티티 등록
-            Employee employee = new Employee();
-            employee.setName("둘리");
-
-            tx.begin();
-            em.persist(employee);
-            tx.commit();
-
-            for (int i = 0; i < 30; i++) {
-                Thread.sleep(1000);
-                logger.info("다른 사용자가 데이터 수정중.... {}", i);
-            }
-
-            // 엔티티 REFRESH
-            em.refresh(employee);
-            logger.info("갱신된 직원정보: {}", employee);
+            // 직원 엔티티 검색
+            Employee employee = em.getReference(Employee.class, 1L);
+            logger.info("검색된 직원 이름 : {}" , employee.getName());
 
         } catch (Exception e) {
-            tx.rollback();
+
             logger.error(e.getMessage(), e);
             fail();
+
         } finally {
             em.close();
             emf.close();

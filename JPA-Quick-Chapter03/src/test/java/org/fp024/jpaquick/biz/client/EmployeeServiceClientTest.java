@@ -24,21 +24,20 @@ public class EmployeeServiceClientTest {
         EntityTransaction tx = em.getTransaction();
 
         try {
-            Employee employee = new Employee();
-            employee.setName("둘리");
-
-            // 직원등록
             tx.begin();
+            Employee employee = new Employee();
+            employee.setName("털보가이");
+            employee.setFavoriteGame("어세신 오리진");
             em.persist(employee);
-            tx.commit();
+
 
             // 직원 검색
-            Employee employee1 = em.find(Employee.class, 1L);
-            Employee employee2 = em.find(Employee.class, 1L);
+            Employee findEmp = em.find(Employee.class, 1L);
 
-            if (employee1 == employee2) {
-                logger.info("검색한 두 객체는 동일한 객체다.");
-            }
+            // 직원 이름변경
+
+            findEmp.setName("털보가이2");
+            tx.commit();
 
         } catch (Exception e) {
             tx.rollback();

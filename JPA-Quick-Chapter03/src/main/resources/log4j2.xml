@@ -13,6 +13,11 @@
 		<Logger name="org.fp024" level="DEBUG" additivity="false">
 			<AppenderRef ref="console" />
 		</Logger>
+
+		<Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+			<AppenderRef ref="console" />
+		</Logger>
+
 		<Root level="INFO">
 			<AppenderRef ref="console" />
 		</Root>

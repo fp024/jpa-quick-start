@@ -11,9 +11,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "s_emp")
 public class Employee {
 	@Id
-	@GeneratedValue //(strategy = GenerationType.IDENTITY)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String favoriteGame;
 
 }

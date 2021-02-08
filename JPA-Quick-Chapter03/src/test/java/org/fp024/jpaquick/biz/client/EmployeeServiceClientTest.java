@@ -24,20 +24,25 @@ public class EmployeeServiceClientTest {
         EntityTransaction tx = em.getTransaction();
 
         try {
-            tx.begin();
             Employee employee = new Employee();
             employee.setName("털보가이");
-            employee.setFavoriteGame("어세신 오리진");
+
+            tx.begin();
             em.persist(employee);
-
-
-            // 직원 검색
-            Employee findEmp = em.find(Employee.class, 1L);
-
-            // 직원 이름변경
-
-            findEmp.setName("털보가이2");
             tx.commit();
+
+            // 모든 엔티티를 분리 상태로 전환시킨다.
+            em.clear();
+
+            // 직원 엔티티 이름 수정
+            tx.begin();
+            employee.setName("탈보가이");
+            Employee employeeEmp = em.merge(employee);
+            tx.commit();
+
+            // 관리상태 여부 확인
+            logger.info("employee 관리: {}", em.contains(employee));
+            logger.info("employeeEmp 관리: {}", em.contains(employeeEmp));
 
         } catch (Exception e) {
             tx.rollback();

@@ -27,10 +27,11 @@ public class ManyToOneOneWayClientTest {
 
     @AfterAll
     static void afterAll() {
-        if(emf != null) {
+        if (emf != null) {
             emf.close();
         }
     }
+
 
     @Order(1)
     @Test
@@ -65,6 +66,26 @@ public class ManyToOneOneWayClientTest {
     void dataSelect() {
         EntityManager em = emf.createEntityManager();
         Employee result = em.find(Employee.class, 2L);
+//      logger.info("{} 직원이 검색됨 : {}", result.getName());
         logger.info("{}의 부서: {}", result.getName(), result.getDept().getName());
+    }
+
+    @Order(3)
+    @Test
+    void dataUpdate() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        // 신규 부서 등록
+        Department department = new Department();
+        department.setName("영업부");
+        em.persist(department);
+
+        // 부서 변경
+        Employee employee = em.find(Employee.class, 1L);
+        employee.setDept(department);
+        em.persist(department);
+
+        em.getTransaction().commit();
     }
 }

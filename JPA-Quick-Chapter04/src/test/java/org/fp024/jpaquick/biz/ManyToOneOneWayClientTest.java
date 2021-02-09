@@ -5,6 +5,7 @@ import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -62,6 +63,7 @@ public class ManyToOneOneWayClientTest {
     }
 
     @Order(2)
+    @Disabled
     @Test
     void dataSelect() {
         EntityManager em = emf.createEntityManager();
@@ -71,6 +73,7 @@ public class ManyToOneOneWayClientTest {
     }
 
     @Order(3)
+    @Disabled
     @Test
     void dataUpdate() {
         EntityManager em = emf.createEntityManager();
@@ -86,6 +89,21 @@ public class ManyToOneOneWayClientTest {
         employee.setDept(department);
         em.persist(department);
 
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Cannot delete or update a parent row: a foreign key constraint fails
+     *  (`jpa_test`.`s_emp`, CONSTRAINT `FK99h3mn3vbkdu8n0wajen4mmqo` FOREIGN KEY (`dept_id`) REFERENCES `s_dept` (`dept_id`))
+     */
+    @Order(3)
+    @Test
+    void dateDelete() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Department department = em.find(Department.class, 1L);
+        em.remove(department);
         em.getTransaction().commit();
     }
 }

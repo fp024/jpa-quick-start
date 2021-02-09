@@ -1,4 +1,4 @@
-package com.fp024.jpaquick.biz.repository;
+package org.fp024.jpaquick.biz.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Employee;

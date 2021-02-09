@@ -4,7 +4,7 @@ DROP TABLE `jpa_test`.`s_emp`;
 CREATE TABLE `jpa_test`.`s_dept`
 (
     `dept_id` BIGINT      NOT NULL,
-    `name`    VARCHAR(50) NOT NULL,
+    `name`    VARCHAR(25) NOT NULL,
     PRIMARY KEY (`dept_id`)
 );
 

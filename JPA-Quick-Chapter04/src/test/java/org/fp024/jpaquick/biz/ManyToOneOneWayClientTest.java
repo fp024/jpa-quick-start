@@ -92,15 +92,17 @@ public class ManyToOneOneWayClientTest {
         em.getTransaction().commit();
     }
 
-    /**
-     * Cannot delete or update a parent row: a foreign key constraint fails
-     *  (`jpa_test`.`s_emp`, CONSTRAINT `FK99h3mn3vbkdu8n0wajen4mmqo` FOREIGN KEY (`dept_id`) REFERENCES `s_dept` (`dept_id`))
-     */
     @Order(3)
     @Test
     void dateDelete() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
+
+        Employee employee1 = em.find(Employee.class, 1L);
+        employee1.setDept(null);
+
+        Employee employee2 = em.find(Employee.class, 2L);
+        employee2.setDept(null);
 
         Department department = em.find(Department.class, 1L);
         em.remove(department);

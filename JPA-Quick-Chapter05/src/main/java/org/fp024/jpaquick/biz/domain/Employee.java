@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,4 +28,11 @@ public class Employee {
     @Column(length = 25, nullable = false)
     private String name;
 
+    @OneToOne(mappedBy = "employee")
+    private EmployeeCard card;
+
+    public void setCard(EmployeeCard card) {
+        this.card = card;
+        card.setEmployee(this);
+    }
 }

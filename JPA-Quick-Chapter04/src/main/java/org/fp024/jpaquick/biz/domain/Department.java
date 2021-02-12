@@ -18,9 +18,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
-// @EqualsAndHashCode(exclude = {"employeeList"})
-@EqualsAndHashCode
+@ToString(exclude = {"employeeList"})
+@EqualsAndHashCode(exclude = {"employeeList"})
 @Entity
 @Table(name="s_dept")
 public class Department {

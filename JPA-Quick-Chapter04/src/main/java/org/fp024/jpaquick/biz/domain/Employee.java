@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,7 @@ public class Employee {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "dept_id")
     private Department dept;
 

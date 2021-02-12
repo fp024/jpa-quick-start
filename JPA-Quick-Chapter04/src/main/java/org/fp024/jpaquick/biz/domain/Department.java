@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -30,6 +33,6 @@ public class Department {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "dept", fetch = FetchType.EAGER)
-    private Set<Employee> employeeList = new HashSet<>();
+    @OneToMany(mappedBy = "dept", cascade = CascadeType.PERSIST)
+    private List<Employee> employeeList = new ArrayList<>();
 }

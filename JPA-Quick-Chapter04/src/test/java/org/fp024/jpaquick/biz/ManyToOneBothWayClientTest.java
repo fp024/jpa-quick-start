@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.stream.IntStream;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -47,19 +48,16 @@ public class ManyToOneBothWayClientTest {
         // em.persist(department);
 
         // 직원등록
-        Employee employee1 = new Employee();
-        employee1.setName("탈보가이");
-        employee1.setDept(department);
-        em.persist(employee1);
+        IntStream.rangeClosed(1, 5).forEach(
+                i -> {
+                    Employee employee = new Employee();
+                    employee.setName("직원-" + i);
+                    employee.setDept(department);
+                    // em.persist(employee);
+                }
+        );
 
-        // 직원등록
-        Employee employee2 = new Employee();
-        employee2.setName("다크나이트");
-        employee2.setDept(department);
-        em.persist(employee2);
-
-        logger.info("{}의 직원 수: {}", department.getName(), department.getEmployeeList().size());
-
+        em.persist(department);
         tx.commit();
         em.close();
     }

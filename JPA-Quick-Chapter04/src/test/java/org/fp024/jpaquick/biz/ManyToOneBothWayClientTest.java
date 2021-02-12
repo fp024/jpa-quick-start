@@ -44,7 +44,7 @@ public class ManyToOneBothWayClientTest {
         // 부서등록
         Department department = new Department();
         department.setName("개발부");
-        em.persist(department);
+        // em.persist(department);
 
         // 직원등록
         Employee employee1 = new Employee();

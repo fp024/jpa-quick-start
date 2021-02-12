@@ -1,9 +1,7 @@
 package org.fp024.jpaquick.biz.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -17,25 +15,31 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 @ToString
 @Entity
 @Table(name = "s_emp_card")
 public class EmployeeCard {
-    /** 사원증 ID */
+    /**
+     * 사원증 ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
 
-    /** 사원증 만료 기간 */
+    /**
+     * 사원증 만료 기간
+     */
     private LocalDate expireDate;
 
     private String role;
 
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name="emp_card_id")
+    @JoinColumn(name = "emp_card_id")
     private Employee employee;
 
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+        employee.setCard(this);
+    }
 }

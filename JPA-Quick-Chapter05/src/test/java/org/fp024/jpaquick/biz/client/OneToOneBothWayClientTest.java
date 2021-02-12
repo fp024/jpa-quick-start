@@ -39,20 +39,23 @@ public class OneToOneBothWayClientTest {
         em.getTransaction().begin();
 
         // 직원 등록
-        Employee employee = Employee.builder().name("털보가이").build();
+        Employee employee = new Employee();
+        employee.setName("털보가이");
         em.persist(employee);
 
-
         // 사원증 등록
-        EmployeeCard employeeCard = EmployeeCard.builder()
-                .expireDate(LocalDate.of(2025, 12, 31))
-                .role("MASTER")
-                .employee(employee) // 직원에 대한 참조 설정
-                .build();
+        EmployeeCard employeeCard = new EmployeeCard();
+        employeeCard.setExpireDate(LocalDate.of(2025, 12, 31));
+        employeeCard.setRole("MASTER");
+        employeeCard.setEmployee(employee); // 직원에 대한 참조 설정
         em.persist(employeeCard);
 
         em.getTransaction().commit();
         em.close();
+
+        logger.info("사원증을 통한 직원 정보 접근: {}", employeeCard.getEmployee().getName());  // 여기는 사원정보 정보있을듯..
+        logger.info("직원을 통한 사원정보 접근: {}", employee.getCard().getExpireDate());
+
     }
 
 
@@ -60,7 +63,7 @@ public class OneToOneBothWayClientTest {
     @Test
     void dataSelect() {
         EntityManager em = emf.createEntityManager();
-        
+
         // 검색된 사원증을 통해 직원정보 사용하기
         EmployeeCard employeeCard = em.find(EmployeeCard.class, 1L);
         logger.info("사원증 유효기간 : {}", employeeCard.getExpireDate());

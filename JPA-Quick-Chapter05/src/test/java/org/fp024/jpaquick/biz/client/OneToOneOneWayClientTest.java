@@ -39,16 +39,16 @@ public class OneToOneOneWayClientTest {
         em.getTransaction().begin();
 
         // 직원 등록
-        Employee employee = Employee.builder().name("털보가이").build();
+        Employee employee = new Employee();
+        employee.setName("털보가이");
         em.persist(employee);
 
 
         // 사원증 등록
-        EmployeeCard employeeCard = EmployeeCard.builder()
-                .expireDate(LocalDate.of(2025, 12, 31))
-                .role("MASTER")
-                .employee(employee) // 직원에 대한 참조 설정
-                .build();
+        EmployeeCard employeeCard = new EmployeeCard();
+        employeeCard.setExpireDate(LocalDate.of(2025, 12, 31));
+        employeeCard.setRole("MASTER");
+        employeeCard.setEmployee(employee); // 직원에 대한 참조 설정
         em.persist(employeeCard);
 
         em.getTransaction().commit();

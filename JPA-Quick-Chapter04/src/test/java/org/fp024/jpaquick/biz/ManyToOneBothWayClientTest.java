@@ -87,12 +87,12 @@ public class ManyToOneBothWayClientTest {
         // 부서 검색
         Department department = em.find(Department.class, 1L);
 
-        // 부서에 등록된 직원 삭제
-        department.getEmployeeList().forEach(
-                e -> {
-                    em.remove(e);
-                }
-        );
+        // 부서에 등록된 직원 삭제, Department의 employList에 CascadeType.REMOVE 설정하여 개별 삭제가 필요없음.
+//        department.getEmployeeList().forEach(
+//                e -> {
+//                    em.remove(e);
+//                }
+//        );
 
         // 부서 삭제
         em.remove(department);

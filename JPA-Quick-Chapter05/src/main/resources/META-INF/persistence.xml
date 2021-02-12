@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="Chapter05">
+        <class>org.fp024.jpaquick.biz.domain.Employee</class>
+        <class>org.fp024.jpaquick.biz.domain.EmployeeCard</class>
+
+        <properties>
+            <!-- 데이터 소스 설정 -->
+            <!--
+            <property name="javax.persistence.jdbc.driver"
+                value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.user"
+                value="jpa_test" />
+            <property name="javax.persistence.jdbc.password"
+                value="jpa_test" />
+            <property name="javax.persistence.jdbc.url"
+                value="jdbc:mysql://192.168.100.10/jpa_test" />
+            -->
+            <property name="javax.persistence.jdbc.driver"
+                      value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.user"
+                      value="spring_test"/>
+            <property name="javax.persistence.jdbc.password"
+                      value="spring_test"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:oracle:thin:@192.168.100.20:1521:XE"/>
+
+
+            <!-- JPA 구현체 관련 설정 -->
+            <!-- <property name="hibernate.dialect"
+                value="org.hibernate.dialect.MySQL8Dialect" />
+            -->
+            <!--
+                MySQLDialect 라고 쓰면 테이블 생성시 type=MyISAM" 이 내용을 붙이는데, MySQL 8.0에서는 오류가난다.
+                MySQL8Dialect 로 실행하면  engine=InnoDB 으로 테이블을 생성한다.
+
+                type=MyISAM 설정이 MySQL 4.0부터 사용 되지 않게되었고, 5.5에는 제거되었다고 함.
+            -->
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.Oracle12cDialect"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.id.new_generator_mappings" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.physical_naming_strategy"
+                      value="org.fp024.jpaquick.common.hibernate.CustomPhysicalNamingStrategy"/>
+
+            <!-- OracleXE로 사용시 초기화 시간이 너무 긴데 (약 30초) 아래 옵션을 넣으면.. 대폭 개선됨.  -->
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+
+
+        </properties>
+    </persistence-unit>
+
+</persistence>

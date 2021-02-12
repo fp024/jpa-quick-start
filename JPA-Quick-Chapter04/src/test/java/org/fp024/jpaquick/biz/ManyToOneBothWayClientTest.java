@@ -5,6 +5,7 @@ import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -62,6 +63,7 @@ public class ManyToOneBothWayClientTest {
         em.close();
     }
 
+    @Disabled
     @Order(2)
     @Test
     void dataSelect() {
@@ -74,4 +76,31 @@ public class ManyToOneBothWayClientTest {
                 logger.info("{} ({})", employee.getName(), employee.getDept().getName())
         );
     }
+
+
+    @Order(2)
+    @Test
+    void dataDelete() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        // 부서 검색
+        Department department = em.find(Department.class, 1L);
+
+        // 부서에 등록된 직원 삭제
+        department.getEmployeeList().forEach(
+                e -> {
+                    em.remove(e);
+                }
+        );
+
+        // 부서 삭제
+        em.remove(department);
+
+        em.getTransaction().commit();
+        em.close();
+    }
+
+
+
 }

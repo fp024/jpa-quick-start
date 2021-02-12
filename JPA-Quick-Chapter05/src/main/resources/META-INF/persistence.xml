@@ -4,8 +4,10 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="Chapter05">
-        <class>org.fp024.jpaquick.biz.domain.Employee</class>
-        <class>org.fp024.jpaquick.biz.domain.EmployeeCard</class>
+        <!--<class>org.fp024.jpaquick.biz.domain.Employee</class>
+        <class>org.fp024.jpaquick.biz.domain.EmployeeCard</class>-->
+        <class>org.fp024.jpaquick.biz.domain.Order</class>
+        <class>org.fp024.jpaquick.biz.domain.Product</class>
 
         <properties>
             <!-- 데이터 소스 설정 -->

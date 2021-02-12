@@ -4,12 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,8 +33,12 @@ public class Employee {
     @JoinColumn(name = "dept_id")
     private Department dept;
 
-    public void setDept(@NotNull Department dept) {
-        dept.getEmployeeList().add(this);
+    public void setDept(Department dept) {
         this.dept = dept;
+        dept.getEmployeeList().add(this);
+    }
+
+    public void standby() {
+        this.dept = null;
     }
 }

@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,4 +33,9 @@ public class Employee {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department dept;
+
+    public void setDept(@NotNull Department dept) {
+        dept.getEmployeeList().add(this);
+        this.dept = dept;
+    }
 }

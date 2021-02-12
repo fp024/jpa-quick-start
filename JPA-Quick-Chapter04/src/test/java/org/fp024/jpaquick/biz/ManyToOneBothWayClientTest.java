@@ -58,6 +58,7 @@ public class ManyToOneBothWayClientTest {
         employee2.setDept(department);
         em.persist(employee2);
 
+        logger.info("{}의 직원 수: {}", department.getName(), department.getEmployeeList().size());
 
         tx.commit();
         em.close();

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"employee"})
 @Entity
 @Table(name = "s_emp_card")
 public class EmployeeCard {

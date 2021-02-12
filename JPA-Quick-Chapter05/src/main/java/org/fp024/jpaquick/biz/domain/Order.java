@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "productList")
 @Entity
 @Table(name = "s_ord")
 public class Order {
@@ -60,4 +60,11 @@ public class Order {
             , uniqueConstraints = @UniqueConstraint(columnNames = {"ord_id", "product_id"})
     )
     private List<Product> productList = new ArrayList<>();
+
+    // 상품을 등록할 때, 상품 쪽에 (Order) 정보도 설정한다.
+    public void addProduct(Product product) {
+        productList.add(product);
+        // 반대쪽 (Product) 에도 주문에 대한 참조 정보를 설정한다.
+        product.getOrderList().add(this);
+    }
 }

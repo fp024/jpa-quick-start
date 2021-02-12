@@ -48,7 +48,7 @@ public class OneToOneBothWayClientTest {
         // 직원 등록
         Employee employee = new Employee();
         employee.setName("털보가이");
-        employee.setCard(employeeCard);
+       // employee.setCard(employeeCard);
         em.persist(employee);
 
         em.getTransaction().commit();

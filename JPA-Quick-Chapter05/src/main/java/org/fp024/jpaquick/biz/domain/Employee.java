@@ -29,12 +29,4 @@ public class Employee {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_card_id")
-    private EmployeeCard card;
-
-    public void setCard(EmployeeCard card) {
-        this.card = card;
-        card.setEmployee(this);
-    }
 }

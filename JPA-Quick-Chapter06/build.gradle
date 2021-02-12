@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group 'org.fp024.jpaquick'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.0'
+    implementation 'org.hibernate:hibernate-entitymanager:5.4.27.Final'
+    // implementation 'mysql:mysql-connector-java:8.0.21'
+    implementation 'com.oracle.database.jdbc:ojdbc8:21.1.0.0'
+
+    implementation 'com.google.guava:guava:30.1-jre'
+
+    // IntelliJ의 문서화 또는 정적분석도구 사용한다고 한다. 넣어보라고 알림 떠서 넣어봄.
+    implementation 'org.jetbrains:annotations:20.1.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+}
+
+test {
+    useJUnitPlatform()
+}

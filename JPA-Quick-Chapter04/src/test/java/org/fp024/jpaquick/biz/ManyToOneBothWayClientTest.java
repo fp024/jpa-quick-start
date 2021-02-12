@@ -69,6 +69,9 @@ public class ManyToOneBothWayClientTest {
 
         logger.info("검색된 부서 : {}", department.getName());
         logger.info("부서에 소속된 직원 명단");
-        department.getEmployeeList().forEach(employee -> logger.info("{} ({})", employee.getName(), employee.getDept().getName()));
+        department.getEmployeeList().forEach(employee -> {
+                    logger.info("{} ({})", employee.getName(), employee.getDept().getName());
+                }
+        );
     }
 }

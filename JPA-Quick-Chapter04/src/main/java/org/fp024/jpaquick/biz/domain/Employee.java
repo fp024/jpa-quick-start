@@ -1,5 +1,6 @@
 package org.fp024.jpaquick.biz.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "s_emp")
 public class Employee {

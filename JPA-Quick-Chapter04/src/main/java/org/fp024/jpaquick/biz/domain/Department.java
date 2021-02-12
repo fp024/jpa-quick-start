@@ -1,5 +1,6 @@
 package org.fp024.jpaquick.biz.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,12 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
+// @EqualsAndHashCode(exclude = {"employeeList"})
+@EqualsAndHashCode
 @Entity
 @Table(name="s_dept")
 public class Department {
@@ -29,5 +32,5 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "dept", fetch = FetchType.EAGER)
-    private List<Employee> employeeList = new ArrayList<>();
+    private Set<Employee> employeeList = new HashSet<>();
 }

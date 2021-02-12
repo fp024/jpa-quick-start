@@ -8,6 +8,7 @@
         <class>org.fp024.jpaquick.biz.domain.EmployeeCard</class>-->
         <class>org.fp024.jpaquick.biz.domain.Order</class>
         <class>org.fp024.jpaquick.biz.domain.Product</class>
+        <class>org.fp024.jpaquick.biz.domain.Item</class>
 
         <properties>
             <!-- 데이터 소스 설정 -->

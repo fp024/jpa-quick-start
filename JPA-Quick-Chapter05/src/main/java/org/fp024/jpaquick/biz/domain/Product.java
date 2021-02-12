@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class Product {
      */
     private String category;
 
-    @ManyToMany(mappedBy = "productList")
-    private List<Order> orderList = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Item> itemList = new ArrayList<>();
 
 }

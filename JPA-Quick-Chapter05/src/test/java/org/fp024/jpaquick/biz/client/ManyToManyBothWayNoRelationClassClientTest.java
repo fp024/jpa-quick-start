@@ -56,8 +56,8 @@ public class ManyToManyBothWayNoRelationClassClientTest {
         order.setOrderDate(LocalDateTime.now());
 
         // 주문 객체가 가진 상품 목록 (productList) 에 상품 저장
-        order.getProductList().add(product1);
-        order.getProductList().add(product2);
+       // order.getProductList().add(product1);
+       // order.getProductList().add(product2);
         em.persist(order);
 
         em.getTransaction().commit();
@@ -72,13 +72,13 @@ public class ManyToManyBothWayNoRelationClassClientTest {
         // 검색한 Order 를 통해 Product 목록을 출력한다.
         Order order = em.find(Order.class, 1L);
         logger.info("{}번 주문에 대한 상품 목록", order.getId());
-        order.getProductList().forEach(p -> logger.info("--->{}", p.getName()));
+        //order.getProductList().forEach(p -> logger.info("--->{}", p.getName()));
 
         // 검색한 Product를 통해 Order 목록을 출력한다.
         Product product = em.find(Product.class, 1L);
 
         logger.info("{} 상품에 대한 주문 정보", product.getName());
-        product.getOrderList().forEach(p -> logger.info("--->{}", p));
+        //product.getOrderList().forEach(p -> logger.info("--->{}", p));
 
         em.close();
     }

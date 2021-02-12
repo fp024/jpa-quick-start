@@ -40,22 +40,24 @@ public class ManyToOneBothWayClientTest {
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
-        // 부서등록
-        Department department = new Department();
-        department.setName("개발부");
-        em.persist(department);
 
         // 직원등록
         Employee employee1 = new Employee();
         employee1.setName("탈보가이");
-        employee1.setDept(department);
         em.persist(employee1);
 
         // 직원등록
         Employee employee2 = new Employee();
         employee2.setName("다크나이트");
-        employee2.setDept(department);
         em.persist(employee2);
+
+        // 부서등록
+        Department department = new Department();
+        department.setName("개발부");
+        department.getEmployeeList().add(employee1);
+        department.getEmployeeList().add(employee2);
+        em.persist(department);
+
         tx.commit();
 
         em.close();

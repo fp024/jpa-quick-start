@@ -21,7 +21,7 @@ import java.util.Set;
 @ToString(exclude = {"employeeList"})
 @EqualsAndHashCode(exclude = {"employeeList"})
 @Entity
-@Table(name="s_dept")
+@Table(name = "s_dept")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

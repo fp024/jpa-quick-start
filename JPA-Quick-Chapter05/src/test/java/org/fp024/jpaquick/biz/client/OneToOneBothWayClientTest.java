@@ -38,21 +38,21 @@ public class OneToOneBothWayClientTest {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
-        // 직원 등록
-        Employee employee = new Employee();
-        employee.setName("털보가이");
-        em.persist(employee);
-
         // 사원증 등록
+        // 카드를 등록할때 이때는 사원 정보가 없음.
         EmployeeCard employeeCard = new EmployeeCard();
         employeeCard.setExpireDate(LocalDate.of(2025, 12, 31));
         employeeCard.setRole("MASTER");
-        employeeCard.setEmployee(employee); // 직원에 대한 참조 설정
         em.persist(employeeCard);
+
+        // 직원 등록
+        Employee employee = new Employee();
+        employee.setName("털보가이");
+        employee.setCard(employeeCard);
+        em.persist(employee);
 
         em.getTransaction().commit();
         em.close();
-
     }
 
 
@@ -61,15 +61,8 @@ public class OneToOneBothWayClientTest {
     void dataSelect() {
         EntityManager em = emf.createEntityManager();
 
-        // 검색된 사원증을 통해 직원정보 사용하기
-        EmployeeCard employeeCard = em.find(EmployeeCard.class, 1L);
-        logger.info("사원증 유효기간 : {}", employeeCard.getExpireDate());
-        logger.info("사원증 소유자 : {}", employeeCard.getEmployee().getName());
-
-        // 검색된 직원을 통해 사원증 정보 사용하기
         Employee employee = em.find(Employee.class, 1L);
-        logger.info("사원을 통한 직원 정보 접근: {}", employee);
-        logger.info("카드를 통한 직원 정보 접근 (exclude 처리되어 카드정보만 출력): {}", employeeCard);
+        logger.info("직원을 통한 직원 정보 접근: {}", employee);
 
         em.close();
     }

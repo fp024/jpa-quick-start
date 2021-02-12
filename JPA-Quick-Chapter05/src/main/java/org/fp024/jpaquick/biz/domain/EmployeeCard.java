@@ -5,11 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -34,12 +32,6 @@ public class EmployeeCard {
 
     private String role;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_card_id")
+    @OneToOne(mappedBy = "card")
     private Employee employee;
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-        employee.setCard(this);
-    }
 }

@@ -88,24 +88,16 @@ public class JQLBasicJoinClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e, d FROM Employee e, Department d " +
-                "WHERE e.name = d.name";
+        String jpql = "SELECT e FROM Employee e";
 
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
 
-        List<Object[]> result = query.getResultList();
+        List<Employee> result = query.getResultList();
 
         logger.info("검색된 직원 목록");
-        result.forEach(joinedRow -> {
-            Employee employee = (Employee) joinedRow[0];
-            Department department = (Department) joinedRow[1];
-            if (department == null) {
-                logger.info("{}는 대기중...", employee.getName());
-            } else {
-                logger.info("{}의 부서 {}", employee.getName(), department.getName());
-            }
+        result.forEach(employee -> {
+            logger.info(employee.getName());
         });
-
     }
 
     @BeforeEach

@@ -75,13 +75,21 @@ public class JQLBasicJoinClientTest {
                 .build();
         em.persist(employee);
 
+
+        // 이름이 영업부인 새로운 직원 추가
+        Employee employee2 = Employee.builder()
+                .name("영업부")
+                .build();
+        em.persist(employee2);
+
         em.getTransaction().commit();
     }
 
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e, d FROM Employee e LEFT OUTER JOIN e.dept d";
+        String jpql = "SELECT e, d FROM Employee e, Department d " +
+                "WHERE e.name = d.name";
 
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 

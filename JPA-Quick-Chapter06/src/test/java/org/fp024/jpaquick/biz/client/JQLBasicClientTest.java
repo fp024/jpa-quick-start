@@ -65,12 +65,12 @@ public class JQLBasicClientTest {
         // JPQL
         String jpql = "SELECT id, name, deptName, salary " +
                 "FROM Employee " +
-                "WHERE id=?1 AND name = ?2 ";
-        
+                "WHERE id=:employeeId AND name = :employeeName ";
+
         // JPQL 전송
         Query query = em.createQuery(jpql);
-        query.setParameter(1, 1L);
-        query.setParameter(2, "직원1");
+        query.setParameter("employeeId", 1L);
+        query.setParameter("employeeName", "직원1");
 
 
         // 검색 결과 처리

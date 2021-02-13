@@ -39,9 +39,6 @@ public class JQLBasicJoinClientTest {
     @Test
     void dataInsert() {
         em.getTransaction().begin();
-
-        int t = 3;
-
         Department department1 = Department.builder().name("개발부").build();
 
         IntStream.rangeClosed(1, 3).forEach(i -> {
@@ -76,14 +73,18 @@ public class JQLBasicJoinClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e FROM Employee e";
+        String jpql = "SELECT e, e.dept FROM Employee e";
 
-        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
-        List<Employee> result = query.getResultList();
+        List<Object[]> result = query.getResultList();
 
         logger.info("검색된 직원 목록");
-        result.forEach(employee -> logger.info(employee.getName()));
+        result.forEach(joinedRow -> {
+            Employee employee = (Employee) joinedRow[0];
+            Department department = (Department) joinedRow[1];
+            logger.info("{}의 부서 {}", employee.getName(), department.getName());
+        });
 
     }
 

@@ -73,7 +73,7 @@ public class JQLBasicJoinClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e, e.dept FROM Employee e";
+        String jpql = "SELECT e, d FROM Employee e INNER JOIN e.dept d";
 
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 

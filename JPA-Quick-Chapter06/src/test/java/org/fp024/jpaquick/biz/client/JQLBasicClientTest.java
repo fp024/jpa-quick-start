@@ -14,8 +14,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -52,11 +53,7 @@ public class JQLBasicClientTest {
                             .commissionPct(15.00)
                             .build();
 
-                    // toBuilder 테스트
-                    Employee.EmployeeBuilder clonedBuilder = employee.toBuilder();
-                    clonedBuilder.name(employee.getName() + "+" + i);
-
-                    em.persist(clonedBuilder.build());
+                    em.persist(employee);
                 }
         );
 
@@ -67,15 +64,15 @@ public class JQLBasicClientTest {
     @Test
     void dataSelect() {
         // JPQL
-        String jpql = "SELECT e FROM Employee AS e";
+        String jpql = "SELECT id, name, deptName, salary FROM Employee";
 
         // JPQL 전송
-        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
-        List<Employee> resultList = query.getResultList();
+        Query query = em.createQuery(jpql);
+        List<Object[]> resultList = query.getResultList();
 
         // 검색 결과 처리
         logger.info("검색된 직원 목록");
-        resultList.forEach(employee -> logger.info("-->{}", employee));
+        resultList.forEach(result -> logger.info("--> {}", Arrays.toString(result)));
 
     }
 

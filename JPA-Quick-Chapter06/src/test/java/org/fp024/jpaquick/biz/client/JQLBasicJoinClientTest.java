@@ -88,14 +88,26 @@ public class JQLBasicJoinClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e FROM Employee e LEFT JOIN FETCH e.dept";
+        String jpql = "SELECT d.name, MAX(e.salary), MIN(e.salary), " +
+                "       SUM(e.salary), COUNT(e.salary), AVG(e.salary) " +
+                "  FROM Employee e JOIN e.dept d " +
+                " GROUP BY d.name " +
+                " HAVING AVG(e.salary) > 30000 ";
 
-        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
-        List<Employee> result = query.getResultList();
+        List<Object[]> result = query.getResultList();
 
-        logger.info("검색된 직원 목록");
-        result.forEach(employee -> logger.info(employee.getName()));
+        logger.info("부서별 급여 목록");
+        result.forEach(row -> {
+            String deptName = (String) row[0];
+            Double max = (Double) row[1];
+            Double min = (Double) row[2];
+            Double sum = (Double) row[3];
+            Long count = (Long) row[4];
+            Double avg = (Double) row[5];
+            logger.info("{}: MAX({}), MIN({}), SUM({}), COUNT({}), AVG({}) ", deptName, max, min, sum, count, avg);
+        });
     }
 
     @BeforeEach

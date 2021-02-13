@@ -88,18 +88,25 @@ public class JQLBasicJoinClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e, e.dept FROM Employee e " +
-                "ORDER BY e.dept.name DESC, e.salary ASC ";
+        String jpql = "SELECT e, e.dept FROM Employee e ORDER BY e.id ";
 
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
+        int pageNumber = 2;
+        int pageSize = 5;
+        int startNum = (pageNumber * pageSize) - pageSize;
+
+        query.setFirstResult(startNum);
+        query.setMaxResults(pageSize);
+
         List<Object[]> result = query.getResultList();
 
-        logger.info("검색된 직원 목록");
+
+        logger.info("{} 페이지에 있는 직원 목록", pageNumber);
         result.forEach(row -> {
             Employee employee = (Employee) row[0];
             Department department = (Department) row[1];
-            logger.info("{}에 소속된 급여 {}", department.getName(), employee.getSalary());
+            logger.info("{} : {} 의 부서 {}", employee.getId(), employee.getName(), department.getName());
         });
     }
 

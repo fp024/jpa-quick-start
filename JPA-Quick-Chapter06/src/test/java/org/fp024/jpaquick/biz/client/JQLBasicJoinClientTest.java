@@ -88,16 +88,14 @@ public class JQLBasicJoinClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e FROM Employee e";
+        String jpql = "SELECT e FROM Employee e LEFT JOIN FETCH e.dept";
 
         TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
 
         List<Employee> result = query.getResultList();
 
         logger.info("검색된 직원 목록");
-        result.forEach(employee -> {
-            logger.info(employee.getName());
-        });
+        result.forEach(employee -> logger.info(employee.getName()));
     }
 
     @BeforeEach

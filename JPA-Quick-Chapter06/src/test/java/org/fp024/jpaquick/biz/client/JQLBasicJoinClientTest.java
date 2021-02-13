@@ -67,13 +67,21 @@ public class JQLBasicJoinClientTest {
         Department department3 = Department.builder().name("인재개발부").build();
         em.persist(department3);
 
+        // 부서 정보가 없는 새로운 직원추가
+        Employee employee = Employee.builder()
+                .name("아르바이트")
+                .mailId("Alba-01")
+                .salary(10000.00)
+                .build();
+        em.persist(employee);
+
         em.getTransaction().commit();
     }
 
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e, d FROM Employee e INNER JOIN e.dept d";
+        String jpql = "SELECT e, d FROM Employee e LEFT OUTER JOIN e.dept d";
 
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
@@ -83,7 +91,11 @@ public class JQLBasicJoinClientTest {
         result.forEach(joinedRow -> {
             Employee employee = (Employee) joinedRow[0];
             Department department = (Department) joinedRow[1];
-            logger.info("{}의 부서 {}", employee.getName(), department.getName());
+            if (department == null) {
+                logger.info("{}는 대기중...", employee.getName());
+            } else {
+                logger.info("{}의 부서 {}", employee.getName(), department.getName());
+            }
         });
 
     }

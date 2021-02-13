@@ -14,6 +14,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
@@ -60,11 +61,13 @@ public class JQLBasicClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        // 1번 직원 검색
-        Employee findEmp1 = em.find(Employee.class, 1L);
+        String jpql = "SELECT e FROM Employee e WHERE e.id = 1L";
 
-        // 2번 직원 검색
-        Employee findEmp2 = em.find(Employee.class, 1L);
+        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+
+        Employee findEmp1 = query.getSingleResult();
+
+        Employee findEmp2 = query.getSingleResult();
 
         if (findEmp1 == findEmp2) {
             logger.info("두 객체의 주소는 동일하다");

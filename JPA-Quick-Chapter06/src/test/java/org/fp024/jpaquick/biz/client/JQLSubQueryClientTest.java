@@ -89,7 +89,7 @@ public class JQLSubQueryClientTest {
     @Test
     void dataSelect() {
         String jpql = "SELECT e " +
-                " FROM Employee e " +
+                " FROM Employee e JOIN FETCH e.dept " +
                 " WHERE e.salary > (SELECT AVG(e.salary) FROM Employee e) ";
 
         TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);

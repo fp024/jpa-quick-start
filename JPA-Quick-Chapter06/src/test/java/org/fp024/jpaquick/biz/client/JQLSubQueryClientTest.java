@@ -89,14 +89,14 @@ public class JQLSubQueryClientTest {
     @Test
     void dataSelect() {
         String jpql = "SELECT e " +
-                " FROM Employee e JOIN FETCH e.dept " +
-                " WHERE e.salary > (SELECT AVG(e.salary) FROM Employee e) ";
+                " FROM Employee e " +
+                " WHERE NOT EXISTS (SELECT d FROM Department d WHERE d = e.dept)";
 
         TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
 
         List<Employee> result = query.getResultList();
 
-        logger.info("평균 이상의 급여 수급자 명단");
+        logger.info("부서에 속하지 않은 직원 명단");
         result.forEach(employee -> logger.info(employee.getName()));
     }
 

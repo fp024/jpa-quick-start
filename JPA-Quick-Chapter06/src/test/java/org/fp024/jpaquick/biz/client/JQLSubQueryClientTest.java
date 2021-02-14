@@ -88,22 +88,16 @@ public class JQLSubQueryClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        // 맨 아래 WHERE 절을 아래 내용으로 해야 도메인 컬럼과 일치하는 내용 같은데...
-        //  String jpql = "SELECT d FROM Department d " +
-        //                  "WHERE (SELECT COUNT(e) FROM Employee e " +
-        //                  "WHERE d.deptId = e.dept.deptId) >= 3 ";
+        String jpql = "SELECT e " +
+                " FROM Employee e " +
+                " WHERE e.salary > (SELECT AVG(e.salary) FROM Employee e) ";
 
-        // p395에서는 d.id = e.dept 조건으로 하더라도 정상 실행되었다.
-        String jpql = "SELECT d FROM Department d " +
-                "WHERE (SELECT COUNT(e) FROM Employee e " +
-                "WHERE d.id = e.dept) >= 3 ";
+        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
 
-        TypedQuery<Department> query = em.createQuery(jpql, Department.class);
+        List<Employee> result = query.getResultList();
 
-        List<Department> result = query.getResultList();
-
-        logger.info("소속직원이 3명 이상인 부서목록");
-        result.forEach(department -> logger.info(department.getName()));
+        logger.info("평균 이상의 급여 수급자 명단");
+        result.forEach(employee -> logger.info(employee.getName()));
     }
 
     @BeforeEach

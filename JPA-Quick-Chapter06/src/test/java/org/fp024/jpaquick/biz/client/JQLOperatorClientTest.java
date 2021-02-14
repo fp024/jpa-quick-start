@@ -90,12 +90,17 @@ public class JQLOperatorClientTest {
     void dataSelect() {
         String jpql = "SELECT d " +
                 " FROM Department d " +
-                " WHERE d.employeeList IS EMPTY ";
+                "WHERE :employee MEMBER OF d.employeeList";
 
         TypedQuery<Department> query = em.createQuery(jpql, Department.class);
-        List<Department> result = query.getResultList();
 
-        logger.info("직원이 없는 부서 목록");
+        // 6번 직원 객체를 검색하여 파라미터로 설정.
+        Employee employee = em.find(Employee.class, 6L);
+        query.setParameter("employee", employee);
+
+
+        List<Department> result = query.getResultList();
+        logger.info("{} 번 직원이 소속되어있는 부서 목록", employee.getId());
         result.forEach(department -> logger.info("\t{}", department.getName()));
     }
 

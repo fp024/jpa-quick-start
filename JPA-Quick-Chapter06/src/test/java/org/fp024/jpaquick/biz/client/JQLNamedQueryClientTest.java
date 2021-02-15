@@ -8,7 +8,8 @@ import org.junit.jupiter.api.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -82,11 +83,13 @@ class JQLNamedQueryClientTest {
     @Test
     void dataSelect() {
 
-        TypedQuery<Employee> query = em.createNamedQuery("Employee.searchByName", Employee.class);
-        query.setParameter("searchName", "%영업%");
+        Query query = em.createNamedQuery("Employee.searchDeptId");
+        query.setParameter("deptId", 2L);
 
-        List<Employee> result = query.getResultList();
-        result.forEach(row -> logger.info("===> {}번 직원의 이름: {}", row.getId(), row.getName()));
+
+
+        List<Object[]> result = query.getResultList();
+        result.forEach(row -> logger.info("===> {}", Arrays.toString(row)));
     }
 
     @BeforeEach

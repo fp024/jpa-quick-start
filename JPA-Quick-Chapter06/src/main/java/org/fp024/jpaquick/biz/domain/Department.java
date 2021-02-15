@@ -7,13 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +24,7 @@ public class Department {
 
     private String name;
 
+    @OrderColumn(name = "emp_idx")
     @OneToMany(mappedBy = "dept", cascade = CascadeType.PERSIST)
     private final List<Employee> employeeList = new ArrayList<>();
 }

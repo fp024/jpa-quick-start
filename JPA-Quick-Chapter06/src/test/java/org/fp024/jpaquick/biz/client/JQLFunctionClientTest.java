@@ -81,14 +81,14 @@ class JQLFunctionClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT d " +
-                "        FROM Department d" +
-                "       WHERE SIZE(d.employeeList) >= 3";
+        String jpql = "SELECT d.name, INDEX(e), e " +
+                "        FROM Department d JOIN d.employeeList e " +
+                "       WHERE INDEX(e) = 2";
 
-        TypedQuery<Department> query = em.createQuery(jpql, Department.class);
+        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
-        List<Department> result = query.getResultList();
-        result.forEach(row -> logger.info("====> {}", row));
+        List<Object[]> result = query.getResultList();
+        result.forEach(row -> logger.info("{} {}번 인덱스에 저장된 직원: {}", row[0], row[1], (Employee)row[2]));
     }
 
     @BeforeEach

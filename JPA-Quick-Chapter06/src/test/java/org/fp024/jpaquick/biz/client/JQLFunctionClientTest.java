@@ -3,25 +3,19 @@ package org.fp024.jpaquick.biz.client;
 import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class JQLSubQueryClientTest {
+class JQLFunctionClientTest {
     private static EntityManagerFactory emf;
     private EntityManager em;
 
@@ -88,16 +82,19 @@ class JQLSubQueryClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT e " +
-                " FROM Employee e " +
-                " WHERE NOT EXISTS (SELECT d FROM Department d WHERE d = e.dept)";
+        String jpql = "SELECT CONCAT(e.name, '의 급여: ', e.salary ) AS 급여 "
+                + "         , SUBSTRING(e.name, 1, 2) "
+                + "         , TRIM( TRAILING '부' FROM e.dept.name ) "
+                + "         , LOWER(e.mailId) "
+                + "         , UPPER(e.mailId) "
+                + "         , LENGTH(e.mailId) "
+                + "         , LOCATE('st', e.mailId) "
+                + "  FROM Employee e ";
 
-        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
-        List<Employee> result = query.getResultList();
-
-        logger.info("부서에 속하지 않은 직원 명단");
-        result.forEach(employee -> logger.info(employee.getName()));
+        List<Object[]> result = query.getResultList();
+        result.forEach(row -> logger.info("====> {}", Arrays.toString(row)));
     }
 
     @BeforeEach

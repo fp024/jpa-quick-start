@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class JQLBasicClientTest {
+class JQLBasicClientTest {
     private static EntityManagerFactory emf;
     private EntityManager em;
 

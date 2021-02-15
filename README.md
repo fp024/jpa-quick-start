@@ -25,3 +25,17 @@
 
 ## 정오표  
 * p175 : 동기화 잡업 -> 동기화 작업
+
+
+## 기타
+* Gradle
+  * Windows 8.1 과 Gradle 6.4.1 이상에서 빌드 문제가 있다.
+    * 빌드시 계속 데몬을 실행시켜, Java프로세스가 무한정 늘어난다. 
+    * 6.4 버전에서는 이슈 없음.
+* IntelliJ
+  * JPA Console로 SELECT조회하면 persistence.xml의 
+    hibernate.hbm2ddl.auto=create 설정을 다시 읽어서 조회를 하는지?
+    DB의 데이터가 삭제된다.
+    * DB에서 S_EMP와 S_DEPT를 제거하고 JPA Console로 Employee를 조회했을 때,
+  테이블이 생기는것을 확인했다.
+    * Windows 10 환경의 버전 동일한 IntelliJ에서는 안그랬는데...

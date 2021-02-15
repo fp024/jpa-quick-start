@@ -26,7 +26,7 @@
             <property name="javax.persistence.jdbc.password"
                       value="spring_test"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:oracle:thin:@192.168.100.20:1521:XE"/>
+                      value="jdbc:oracle:thin:@192.168.137.152:1521:XE"/>
 
 
             <!-- JPA 구현체 관련 설정 -->

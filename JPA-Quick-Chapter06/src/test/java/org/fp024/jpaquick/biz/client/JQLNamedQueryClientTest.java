@@ -90,6 +90,7 @@ class JQLNamedQueryClientTest {
     }
 
     @Order(2)
+    @Disabled
     @Test
     public void dataUpdate() {
         em.getTransaction().begin();
@@ -105,6 +106,21 @@ class JQLNamedQueryClientTest {
         int updateCount = query.executeUpdate();
 
         logger.info("{}건의 데이터 갱신됨", updateCount);
+        em.getTransaction().commit();
+    }
+
+
+    @Order(2)
+    @Test
+    void dataDelete() {
+        em.getTransaction().begin();
+
+        Query query = em.createQuery("DELETE FROM Employee e WHERE e.name = :empName");
+        query.setParameter("empName", "아르바이트");
+        int updateCount = query.executeUpdate();
+
+        logger.info("{}건의 데이터 갱신됨", updateCount);
+
         em.getTransaction().commit();
     }
 

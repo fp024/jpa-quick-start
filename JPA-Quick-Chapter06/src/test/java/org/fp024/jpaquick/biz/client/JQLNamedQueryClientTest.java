@@ -80,17 +80,34 @@ class JQLNamedQueryClientTest {
     }
 
     @Order(2)
+    @Disabled
     @Test
     void dataSelect() {
-
         Query query = em.createNamedQuery("Employee.searchDeptId");
         query.setParameter("deptId", 2L);
-
-
-
         List<Object[]> result = query.getResultList();
         result.forEach(row -> logger.info("===> {}", Arrays.toString(row)));
     }
+
+    @Order(2)
+    @Test
+    public void dataUpdate() {
+        em.getTransaction().begin();
+
+        Query query = em.createQuery("UPDATE Employee e " +
+                "                               SET e.dept = :department " +
+                "                             WHERE e.id = :empId");
+
+        Department findDept = em.find(Department.class, 1L);
+
+        query.setParameter("department", findDept);
+        query.setParameter("empId", 7L);
+        int updateCount = query.executeUpdate();
+
+        logger.info("{}건의 데이터 갱신됨", updateCount);
+        em.getTransaction().commit();
+    }
+
 
     @BeforeEach
     void beforeEach() {

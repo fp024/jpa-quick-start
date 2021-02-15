@@ -3,7 +3,7 @@
         xmlns="http://java.sun.com/xml/ns/persistence/orm"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_1.xsd"
-        version="2.1">
+        version="2.0">
 
     <named-query name="Employee.searchById">
         <query>
@@ -24,5 +24,21 @@
             ]]>
         </query>
     </named-query>
+
+
+    <named-native-query name="Employee.searchDeptId">
+        <query>
+            <![CDATA[
+            SELECT e.ID
+                 , e.NAME AS ename
+                 , e.SALARY
+                 , d.NAME AS dname
+              FROM S_EMP e
+             INNER JOIN S_DEPT d
+                ON e.DEPT_ID = d.DEPT_ID
+             WHERE e.DEPT_ID = :deptId
+            ]]>
+        </query>
+    </named-native-query>
 </entity-mappings>
 

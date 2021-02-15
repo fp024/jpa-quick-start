@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "s_emp")
+/*
 @NamedNativeQueries({
         @NamedNativeQuery(name = "Employee.searchDeptId",
                 query = "SELECT e.ID, e.NAME AS ename, e.SALARY, d.NAME AS dname " +
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
                         "    ON e.DEPT_ID = d.DEPT_ID " +
                         " WHERE e.DEPT_ID = :deptId ")
 })
+ */
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

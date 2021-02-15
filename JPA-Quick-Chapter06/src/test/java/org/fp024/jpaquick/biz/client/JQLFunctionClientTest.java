@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -81,14 +82,14 @@ class JQLFunctionClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT d.name, INDEX(e), e " +
-                "        FROM Department d JOIN d.employeeList e " +
-                "       WHERE INDEX(e) = 2";
+        // 오라클 18c 에서는 CURRENT_TIME 함수가 없어서 오류남.
+        String jpql = "SELECT CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP " +
+                "        FROM Department d";
 
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 
         List<Object[]> result = query.getResultList();
-        result.forEach(row -> logger.info("{} {}번 인덱스에 저장된 직원: {}", row[0], row[1], (Employee)row[2]));
+        result.forEach(row -> logger.info("===> {}", Arrays.toString(row)));
     }
 
     @BeforeEach

@@ -17,13 +17,12 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "s_emp")
-@NamedQueries({
-        @NamedQuery(name = "Employee.searchById",
-                query = "SELECT e FROM Employee e WHERE e.id = :searchKeyword"),
-        @NamedQuery(name = "Employee.searchByName",
-                query = "SELECT e FROM Employee e WHERE e.name LIKE :searchName")
-
-})
+//@NamedQueries({
+//        @NamedQuery(name = "Employee.searchById",
+//                query = "SELECT e FROM Employee e WHERE e.id = :searchKeyword"),
+//        @NamedQuery(name = "Employee.searchByName",
+//                query = "SELECT e FROM Employee e WHERE e.name LIKE :searchName")
+//})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

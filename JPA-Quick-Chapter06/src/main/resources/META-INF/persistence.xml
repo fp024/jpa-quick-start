@@ -4,6 +4,8 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="Chapter06">
+        <mapping-file>jpql/EntityMap_employee.xml</mapping-file>
+
         <class>org.fp024.jpaquick.biz.domain.Employee</class>
         <class>org.fp024.jpaquick.biz.domain.Department</class>
 

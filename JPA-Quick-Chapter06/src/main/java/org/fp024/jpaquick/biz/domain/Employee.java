@@ -7,13 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,6 +17,13 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "s_emp")
+@NamedQueries({
+        @NamedQuery(name = "Employee.searchById",
+                query = "SELECT e FROM Employee e WHERE e.id = :searchKeyword"),
+        @NamedQuery(name = "Employee.searchByName",
+                query = "SELECT e FROM Employee e WHERE e.name LIKE :searchName")
+
+})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

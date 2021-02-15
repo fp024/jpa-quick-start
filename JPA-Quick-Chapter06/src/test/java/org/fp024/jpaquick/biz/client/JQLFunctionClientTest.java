@@ -82,14 +82,7 @@ class JQLFunctionClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT CONCAT(e.name, '의 급여: ', e.salary ) AS 급여 "
-                + "         , SUBSTRING(e.name, 1, 2) "
-                + "         , TRIM( TRAILING '부' FROM e.dept.name ) "
-                + "         , LOWER(e.mailId) "
-                + "         , UPPER(e.mailId) "
-                + "         , LENGTH(e.mailId) "
-                + "         , LOCATE('st', e.mailId) "
-                + "  FROM Employee e ";
+        String jpql = "SELECT ABS(-46), SQRT(9), MOD(20,6) FROM Employee e ";
 
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 

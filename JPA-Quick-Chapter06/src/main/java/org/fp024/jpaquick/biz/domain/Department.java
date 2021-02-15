@@ -21,7 +21,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@ToString(exclude = "employeeList")
 @Entity
 @Table(name = "s_dept")
 public class Department {

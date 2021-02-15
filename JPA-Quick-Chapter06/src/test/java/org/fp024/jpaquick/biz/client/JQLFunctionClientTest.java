@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -82,12 +81,14 @@ class JQLFunctionClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        String jpql = "SELECT ABS(-46), SQRT(9), MOD(20,6) FROM Employee e ";
+        String jpql = "SELECT d " +
+                "        FROM Department d" +
+                "       WHERE SIZE(d.employeeList) >= 3";
 
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+        TypedQuery<Department> query = em.createQuery(jpql, Department.class);
 
-        List<Object[]> result = query.getResultList();
-        result.forEach(row -> logger.info("====> {}", Arrays.toString(row)));
+        List<Department> result = query.getResultList();
+        result.forEach(row -> logger.info("====> {}", row));
     }
 
     @BeforeEach

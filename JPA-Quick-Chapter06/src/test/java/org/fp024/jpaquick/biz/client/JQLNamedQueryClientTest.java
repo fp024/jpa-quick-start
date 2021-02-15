@@ -90,27 +90,28 @@ class JQLNamedQueryClientTest {
     }
 
     @Order(2)
-    @Disabled
     @Test
     public void dataUpdate() {
         em.getTransaction().begin();
 
+        Employee findEmp = em.find(Employee.class, 3L);
+        logger.info("수정전 급여: {}", findEmp.getSalary());
+
         Query query = em.createQuery("UPDATE Employee e " +
-                "                               SET e.dept = :department " +
-                "                             WHERE e.id = :empId");
-
-        Department findDept = em.find(Department.class, 1L);
-
-        query.setParameter("department", findDept);
-        query.setParameter("empId", 7L);
+                "                        SET e.salary= e.salary * 1.3 " +
+                "                      WHERE e.id= :empId");
+        query.setParameter("empId", 3L);
         int updateCount = query.executeUpdate();
+        logger.info("{} 건의 데이터 갱신됨", updateCount);
 
-        logger.info("{}건의 데이터 갱신됨", updateCount);
+        logger.info("수정후 급여: {}", findEmp.getSalary());
+
         em.getTransaction().commit();
     }
 
 
     @Order(2)
+    @Disabled
     @Test
     void dataDelete() {
         em.getTransaction().begin();

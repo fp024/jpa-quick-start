@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -74,40 +75,21 @@ class CriteriaSearchClientTest {
     @Order(2)
     @Test
     void dataSelect() {
-        // 검색 정보 설정
-        String searchCondition = "TITLE";
-        String searchKeyword = "과장";
-
         // 크라이테리어 빌더 생성
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
         // 크라이테이어 쿼리 생성
-        CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
+        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
 
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // SELECT emp
-        criteriaQuery.select(emp);
+        // SELECT emp.id, emp.name, emp.salary
+        criteriaQuery.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"));
 
 
-        // 검색조건에 따른 분기 처리
-        if (searchCondition.equals("NAME")) {
-            // WHERE name = :searchKeyword
-            criteriaQuery.where(builder.equal(emp.get("name"), searchKeyword));
-        } else if (searchCondition.equals("MAILID")) {
-            // WHERE mailId = :mailId
-            criteriaQuery.where(builder.equal(emp.get("mailId"), searchKeyword));
-        } else if (searchCondition.equals("TITLE")) {
-            // WHERE title = :title
-            criteriaQuery.where(builder.equal(emp.get("title"), searchKeyword));
-        } else {
-            throw new IllegalArgumentException("잘못된 검색 조건: " + searchCondition);
-        }
-
-        TypedQuery<Employee> query = em.createQuery(criteriaQuery);
-
-        query.getResultList().forEach(e -> logger.info("---> {}", e));
+        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
+        query.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
 
     }
 

@@ -25,7 +25,11 @@
 
 ## 정오표  
 * p175 : 동기화 잡업 -> 동기화 작업
-
+* p470 : 
+  * le(), lessThanOrEqualTo() 항목
+    * 메서드은 맞는데, 값만 25400.00 에서 121500.00 으로 변경필요.
+  * lessThan() 항목
+    * `builder.graterThan(emp.<Double>.get("salary"), 25400.00)` -> `builder.lessThan(emp.<Double>.get("salary"), 121500.00)`
 
 ## 기타
 * Gradle

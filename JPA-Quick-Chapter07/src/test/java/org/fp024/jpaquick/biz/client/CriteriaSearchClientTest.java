@@ -4,14 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -89,29 +91,24 @@ class CriteriaSearchClientTest {
         // 크라이테리어 빌더 생성
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
-        CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
+        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
 
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // SELECT emp
-        criteriaQuery.select(emp);
+        // SELECT emp.dept.name, SUM(emp.salary), COUNT(emp), AVG(emp.salary)
+        criteriaQuery.multiselect(
+                emp.get("dept").get("name")
+                , builder.sum(emp.get("salary"))
+                , builder.count(emp)
+                , builder.avg(emp.get("salary"))
+        );
 
-        // JOIN FETCH emp.dept dept
-        emp.fetch("dept");
+        // GROUP BY emp.dept.name
+        criteriaQuery.groupBy(emp.get("dept").get("name"));
 
-        // WHERE (emp.mailId LIKE 'Viru%'
-        //    OR emp.salary >= 35000.00)
-        //   AND emp.dept.name = '영업부'
-        Predicate[] condition1 = {
-                builder.like(emp.get("mailId"), "Viru%"),
-                builder.greaterThanOrEqualTo(emp.get("salary"), 35000.00)
-        };
-        Predicate predicate = builder.and(builder.or(condition1), builder.equal(emp.get("dept").get("name"), "영업부"));
-        criteriaQuery.where(predicate);
-
-        TypedQuery<Employee> query = em.createQuery(criteriaQuery);
-        query.getResultList().forEach(employee -> logger.info("---> {}", employee));
+        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
+        query.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
 
     }
 

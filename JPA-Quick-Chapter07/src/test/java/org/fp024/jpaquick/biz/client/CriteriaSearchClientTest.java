@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -97,11 +98,15 @@ class CriteriaSearchClientTest {
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // SELECT emp.name, emp.salary, emp.dept.name
+        // INNER JOIN emp.dept dept
+        Join<Employee, Department> dept = emp.join("dept");
+
+
+        // SELECT emp.name, emp.salary, dept.name
         criteriaQuery.multiselect(
                 emp.get("name")     // 직원 이름
                 , emp.get("salary") // 직원 급여
-                , emp.get("dept").get("name") // 부서이름 (emp.dept.name)
+                , dept.get("name") // 부서이름 (dept.name) // JOIN 결과에서 직접 받음.
         );
 
 

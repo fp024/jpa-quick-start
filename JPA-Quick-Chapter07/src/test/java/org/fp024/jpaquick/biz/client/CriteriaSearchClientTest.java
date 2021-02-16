@@ -81,13 +81,19 @@ class CriteriaSearchClientTest {
 
         String jpqlByName = "SELECT e FROM Employee e WHERE e.name = :searchKeyword";
 
+        String jpqlByTitle = "SELECT e FROM Employee e WHERE e.title = :searchKeyword";
+
         TypedQuery<Employee> query;
 
         // 검색조건에 따른 분기 처리
         if (searchCondition.equals("NAME")) {
             query = em.createQuery(jpqlByName, Employee.class);
-        } else {
+        } else if (searchCondition.equals("MAILID")) {
             query = em.createQuery(jpqlByMailId, Employee.class);
+        } else if (searchCondition.equals("TITLE")) {
+            query = em.createQuery(jpqlByTitle, Employee.class);
+        } else {
+            throw new IllegalArgumentException("잘못된 검색 조건: " + searchCondition);
         }
 
         query.setParameter("searchKeyword", searchKeyword);

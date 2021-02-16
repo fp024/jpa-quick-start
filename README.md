@@ -17,12 +17,15 @@
 ## 의견
 * main 테스트로 테스트 대신 JUnit으로 DAO를 테스트하는 식으로 진행하면 좋을 것 같습니다.
   * 프로젝트 설정시 JUnit 4 또는 5가 기본 사용가능한 상태가 되어, 사용이 어렵지는 않을 것 같습니다.
+* Java 8 이상의 Lamda 식이나, 최신 날짜 클래스를 사용하면 좋을 것 같습니다.
+   * 하이버네이트 요즘 버전에서는 Java 8의 LocalDate, LocalDateTime을 그대로 사용할 수 있음.
+   * 반복부분들을 람다식으로 바꿔봐도 좋을것 같습니다. 
 * p362~365 까지 log4j 추가가 있는데, 아래 내용이 들어가거나 변경되면 좋을 것 같습니다.
   * log4j2 slf4j기반으로 가이드가 되면 좋을 것 같음.
   * 로거 이름을 org.hibernate.type 까지보다는 org.hibernate.type.descriptor.sql.BasicBinder 까지 지정하고 레빌을 TRACE 로 유지했을 때, 바인딩로그만 보여서, 괜찮음.
 * p471 :
-  * 부서정보가 없는 직원을 검색하기 때문에 dept(s_dept)에 대한 fetch 없이 s_emp.dept_id 가 NULL인 것만 확인하면 되기 때문에, 
-    일부러 FETCH문을 포함할 필요가 없어보입니다.
+  * 부서정보가 없는 직원을 검색하는 것에 대해서는, dept(s_dept)에 대한 fetch 없이 s_emp.dept_id 가 NULL인 것만 확인하면 되기 때문에, 
+    일부러 FETCH문을 포함할 필요가 없을 것 같습니다.
     
 
 ## 정오표  
@@ -32,7 +35,7 @@
     * 메서드은 맞는데, 값만 25400.00 에서 121500.00 으로 변경필요.
   * lessThan() 항목
     * `builder.graterThan(emp.<Double>.get("salary"), 25400.00)` -> `builder.lessThan(emp.<Double>.get("salary"), 121500.00)`
-
+* p474 : 주석 부분에서  `AND emp.salary >= 5000/00` 의 숫자 부분을 `35000.00` 으로 변경
 
 
 ## 기타

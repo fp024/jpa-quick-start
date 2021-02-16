@@ -94,21 +94,25 @@ class CriteriaSearchClientTest {
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        Predicate predicate = builder.like(emp.get("mailId"), "%rona%");
-
         // SELECT emp
         criteriaQuery.select(emp);
 
-        emp.fetch("dept", JoinType.LEFT);
+        // JOIN FETCH emp.dept dept
+        emp.fetch("dept");
 
+        // WHERE emp.dept IS NOT NULL
+        //   AND emp.mailId LIKE Viru%
+        //   AND emp.salary >= 35000.00
+        Predicate[] condition = {
+                builder.isNotNull(emp.get("dept"))
+                , builder.like(emp.get("mailId"), "Viru%")
+                , builder.greaterThanOrEqualTo(emp.get("salary"), 35000.00)
+        };
+        Predicate predicate = builder.and(condition);
         criteriaQuery.where(predicate);
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
-        logger.info("이름에 rona가 포함된 직원");
-        query.getResultList().forEach(employee -> {
-            logger.info("\t{}", employee);
-
-        });
+        query.getResultList().forEach(employee -> logger.info("---> {}", employee));
 
     }
 

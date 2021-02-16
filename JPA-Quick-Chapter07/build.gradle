@@ -41,5 +41,15 @@ dependencies {
 }
 
 test {
+    /*
+        터미널에서 테스트 클래스 실행 예시
+        > gradlew test --tests *CriteriaSearchClientTest.dataSelect
+     */
     useJUnitPlatform()
+    // 터미널에서 테스트 실행시 테스트 실행의 콘솔 출력을 위해 추가.
+    // https://stackoverflow.com/questions/40954017/gradle-how-to-get-output-from-test-stderr-stdout-into-console
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
 }

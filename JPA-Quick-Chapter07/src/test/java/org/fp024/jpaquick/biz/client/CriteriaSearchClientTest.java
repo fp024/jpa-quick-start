@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -91,27 +90,22 @@ class CriteriaSearchClientTest {
         // 크라이테리어 빌더 생성
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
-        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
+        CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
 
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // SELECT emp.dept.name, SUM(emp.salary), COUNT(emp), AVG(emp.salary)
-        criteriaQuery.multiselect(
-                emp.get("dept").get("name")
-                , builder.sum(emp.get("salary"))
-                , builder.count(emp)
-                , builder.avg(emp.get("salary"))
-        );
+        // SELECT emp
+        criteriaQuery.select(emp);
 
-        // GROUP BY emp.dept.name
-        criteriaQuery.groupBy(emp.get("dept").get("name"));
+        // JOIN FETCH emp.dept dept
+        emp.fetch("dept");
 
-        // HAVING COUNT(emp) >= 3
-        criteriaQuery.having(builder.ge(builder.count(emp), 3));
+        // ORDER BY emp.dept.name DESC
+        criteriaQuery.orderBy(builder.desc(emp.get("dept").get("name")));
 
-        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
-        query.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
+        TypedQuery<Employee> query = em.createQuery(criteriaQuery);
+        query.getResultList().forEach(employee -> logger.info("---> {}", employee));
 
     }
 

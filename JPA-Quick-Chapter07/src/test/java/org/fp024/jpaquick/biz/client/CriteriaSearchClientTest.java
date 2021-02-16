@@ -90,24 +90,19 @@ class CriteriaSearchClientTest {
         // 크라이테리어 빌더 생성
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
-        // 크라이테이어 쿼리 생성
-        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
+        CriteriaQuery<Department> criteriaQuery = builder.createQuery(Department.class);
 
         // FROM Department dept
         Root<Department> dept = criteriaQuery.from(Department.class);
 
-        // INNER JOIN
-        Join<Department, Employee> emp = dept.join("employeeList", JoinType.LEFT);
+        // SELECT dept
+        criteriaQuery.select(dept);
 
-        // SELECT emp.name, emp.salary, dept.name
-        criteriaQuery.multiselect(
-                dept.get("name")  // 부서 이름
-                , emp.get("name") // 직원 이름
-        );
-
-
-        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
-        query.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
+        TypedQuery<Department> query = em.createQuery(criteriaQuery);
+        query.getResultList().forEach(department -> {
+            logger.info("부서명: {}", department.getName());
+            department.getEmployeeList().forEach(employee -> logger.info("\t{}", employee.getName()));
+        });
 
     }
 

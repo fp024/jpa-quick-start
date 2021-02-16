@@ -4,13 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -93,18 +95,17 @@ class CriteriaSearchClientTest {
         // 크라이테이어 쿼리 생성
         CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
 
-        // FROM Employee emp
-        Root<Employee> emp = criteriaQuery.from(Employee.class);
+        // FROM Department dept
+        Root<Department> dept = criteriaQuery.from(Department.class);
 
-        // INNER JOIN emp.dept dept
-        Join<Employee, Department> dept = emp.join("dept", JoinType.LEFT);
+        // INNER JOIN
+        Join<Department, Employee> emp = dept.join("employeeList");
 
 
         // SELECT emp.name, emp.salary, dept.name
         criteriaQuery.multiselect(
-                emp.get("name")     // 직원 이름
-                , emp.get("salary") // 직원 급여
-                , dept.get("name") // 부서이름 (dept.name) // JOIN 결과에서 직접 받음.
+                dept.get("name")  // 부서 이름
+                , emp.get("name") // 직원 이름
         );
 
 

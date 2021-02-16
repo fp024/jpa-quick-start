@@ -4,15 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -99,7 +97,7 @@ class CriteriaSearchClientTest {
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
         // INNER JOIN emp.dept dept
-        Join<Employee, Department> dept = emp.join("dept");
+        Join<Employee, Department> dept = emp.join("dept", JoinType.LEFT);
 
 
         // SELECT emp.name, emp.salary, dept.name

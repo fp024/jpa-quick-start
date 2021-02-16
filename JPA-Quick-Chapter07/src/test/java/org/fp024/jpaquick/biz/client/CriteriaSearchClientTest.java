@@ -3,6 +3,7 @@ package org.fp024.jpaquick.biz.client;
 import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
@@ -31,7 +33,7 @@ class CriteriaSearchClientTest {
         emf.close();
     }
 
-    @Order(1)
+    @org.junit.jupiter.api.Order(1)
     @Test
     void dataInsert() {
         em.getTransaction().begin();
@@ -84,7 +86,7 @@ class CriteriaSearchClientTest {
         em.getTransaction().commit();
     }
 
-    @Order(2)
+    @org.junit.jupiter.api.Order(2)
     @Test
     void dataSelect() {
         // 크라이테리어 빌더 생성
@@ -101,8 +103,13 @@ class CriteriaSearchClientTest {
         // JOIN FETCH emp.dept dept
         emp.fetch("dept");
 
-        // ORDER BY emp.dept.name DESC
-        criteriaQuery.orderBy(builder.desc(emp.get("dept").get("name")));
+        // ORDER BY emp.dept.name DESC, emp.salary DESC
+        javax.persistence.criteria.Order[] orderList = {
+                builder.desc(emp.get("dept").get("name"))
+                , builder.desc(emp.get("salary"))
+        };
+
+        criteriaQuery.orderBy(orderList);
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
         query.getResultList().forEach(employee -> logger.info("---> {}", employee));

@@ -100,15 +100,14 @@ class CriteriaSearchClientTest {
         // JOIN FETCH emp.dept dept
         emp.fetch("dept");
 
-        // WHERE emp.dept IS NOT NULL
-        //   AND emp.mailId LIKE Viru%
-        //   AND emp.salary >= 35000.00
-        Predicate[] condition = {
-                builder.isNotNull(emp.get("dept"))
-                , builder.like(emp.get("mailId"), "Viru%")
-                , builder.greaterThanOrEqualTo(emp.get("salary"), 35000.00)
+        // WHERE (emp.mailId LIKE 'Viru%'
+        //    OR emp.salary >= 35000.00)
+        //   AND emp.dept.name = '영업부'
+        Predicate[] condition1 = {
+                builder.like(emp.get("mailId"), "Viru%"),
+                builder.greaterThanOrEqualTo(emp.get("salary"), 35000.00)
         };
-        Predicate predicate = builder.and(condition);
+        Predicate predicate = builder.and(builder.or(condition1), builder.equal(emp.get("dept").get("name"), "영업부"));
         criteriaQuery.where(predicate);
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);

@@ -4,7 +4,7 @@
 
 * [yes24 도서 판매 페이지 링크](http://www.yes24.com/Product/Goods/92287236)
 
-## 책 진행과 다르게 하는 부분
+## 책 진행에 부가적으로 진행하는하는 부분
 * h2 대신 MySQL 8.0.21 DB, OracleXE 18c 사용 
   * Hyper-V의 CentOS 8.3 가상머신에 설치, 내부 네트워크로 통신
   * 4장 이전까지 MySQL, 4장중반부 부터 OracleXE 에서 테스트
@@ -14,13 +14,15 @@
   * https://mybatis.org/mybatis-dynamic-sql/docs/quickStart.html  
 
 
-
 ## 의견
 * main 테스트로 테스트 대신 JUnit으로 DAO를 테스트하는 식으로 진행하면 좋을 것 같습니다.
   * 프로젝트 설정시 JUnit 4 또는 5가 기본 사용가능한 상태가 되어, 사용이 어렵지는 않을 것 같습니다.
 * p362~365 까지 log4j 추가가 있는데, 아래 내용이 들어가거나 변경되면 좋을 것 같습니다.
   * log4j2 slf4j기반으로 가이드가 되면 좋을 것 같음.
   * 로거 이름을 org.hibernate.type 까지보다는 org.hibernate.type.descriptor.sql.BasicBinder 까지 지정하고 레빌을 TRACE 로 유지했을 때, 바인딩로그만 보여서, 괜찮음.
+* p471 :
+  * 부서정보가 없는 직원을 검색하기 때문에 dept(s_dept)에 대한 fetch 없이 s_emp.dept_id 가 NULL인 것만 확인하면 되기 때문에, 
+    일부러 FETCH문을 포함할 필요가 없어보입니다.
     
 
 ## 정오표  
@@ -30,6 +32,8 @@
     * 메서드은 맞는데, 값만 25400.00 에서 121500.00 으로 변경필요.
   * lessThan() 항목
     * `builder.graterThan(emp.<Double>.get("salary"), 25400.00)` -> `builder.lessThan(emp.<Double>.get("salary"), 121500.00)`
+
+
 
 ## 기타
 * Gradle
@@ -41,5 +45,5 @@
     hibernate.hbm2ddl.auto=create 설정을 다시 읽어서 조회를 하는지?
     DB의 데이터가 삭제된다.
     * DB에서 S_EMP와 S_DEPT를 제거하고 JPA Console로 Employee를 조회했을 때,
-  테이블이 생기는것을 확인했다.
-    * Windows 10 환경의 버전 동일한 IntelliJ에서는 안그랬는데...
+  테이블이 생기는것을 확인함, 그동안 못느꼈던 원인은 아마도 update되어있던 상태였태였었을 것 같다.
+    

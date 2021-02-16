@@ -107,6 +107,9 @@ class CriteriaSearchClientTest {
         // GROUP BY emp.dept.name
         criteriaQuery.groupBy(emp.get("dept").get("name"));
 
+        // HAVING COUNT(emp) >= 3
+        criteriaQuery.having(builder.ge(builder.count(emp), 3));
+
         TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
         query.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
 

@@ -90,21 +90,22 @@ class CriteriaSearchClientTest {
         // 크라이테리어 빌더 생성
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
-        CriteriaQuery<Department> criteriaQuery = builder.createQuery(Department.class);
+        CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
 
-        // FROM Department dept
-        Root<Department> dept = criteriaQuery.from(Department.class);
+        // FROM Employee emp
+        Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // JOIN FETCH dept.employeeList
-        dept.fetch("employeeList", JoinType.LEFT);
+        Predicate predicate = builder.isNull(emp.get("dept"));
 
-        // SELECT DISTINCT dept
-        criteriaQuery.select(dept).distinct(true);
+        // SELECT emp
+        criteriaQuery.select(emp);
+        criteriaQuery.where(predicate);
 
-        TypedQuery<Department> query = em.createQuery(criteriaQuery);
-        query.getResultList().forEach(department -> {
-            logger.info("부서명: {}", department.getName());
-            department.getEmployeeList().forEach(employee -> logger.info("\t{}", employee.getName()));
+        TypedQuery<Employee> query = em.createQuery(criteriaQuery);
+        query.getResultList().forEach(employee -> {
+            logger.info("부서가 없는 직원");
+            logger.info("\t{}", employee);
+
         });
 
     }

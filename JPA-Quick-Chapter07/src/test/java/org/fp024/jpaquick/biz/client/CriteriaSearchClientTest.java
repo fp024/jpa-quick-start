@@ -12,7 +12,6 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -95,15 +94,18 @@ class CriteriaSearchClientTest {
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        Predicate predicate = builder.isNull(emp.get("dept"));
+        Predicate predicate = builder.like(emp.get("mailId"), "%rona%");
 
         // SELECT emp
         criteriaQuery.select(emp);
+
+        emp.fetch("dept", JoinType.LEFT);
+
         criteriaQuery.where(predicate);
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
+        logger.info("이름에 rona가 포함된 직원");
         query.getResultList().forEach(employee -> {
-            logger.info("부서가 없는 직원");
             logger.info("\t{}", employee);
 
         });

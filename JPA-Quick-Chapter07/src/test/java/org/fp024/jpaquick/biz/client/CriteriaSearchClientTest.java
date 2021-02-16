@@ -1,6 +1,7 @@
 package org.fp024.jpaquick.biz.client;
 
 import lombok.extern.slf4j.Slf4j;
+import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.junit.jupiter.api.*;
 
@@ -35,30 +36,42 @@ class CriteriaSearchClientTest {
     @Test
     void dataInsert() {
         em.getTransaction().begin();
+
+        // 부서 정보 등록
+        Department devDept = Department.builder()
+                .name("개발부").build();
+        em.persist(devDept);
+
+        Department salesDept = Department.builder()
+                .name("영업부").build();
+        em.persist(salesDept);
+
         // 직원 정보 등록
         IntStream.rangeClosed(1, 3).forEach(i -> {
             Employee employee = Employee.builder()
                     .name("개발맨 " + i)
                     .mailId("Corona " + i)
-                    .deptName("개발부")
+                    .dept(devDept)
                     .salary(12700.00 * i)
                     .startDate(LocalDateTime.now())
                     .commissionPct(10.00)
                     .build();
             em.persist(employee);
+            devDept.getEmployeeList().add(employee);
         });
 
         IntStream.rangeClosed(1, 3).forEach(i -> {
             Employee employee = Employee.builder()
                     .name("영업맨 " + i)
                     .mailId("Virus " + i)
-                    .deptName("영업부")
+                    .dept(salesDept)
                     .salary(23800.00 * i)
                     .startDate(LocalDateTime.now())
                     .title("과장")
                     .commissionPct(15.00)
                     .build();
             em.persist(employee);
+            salesDept.getEmployeeList().add(employee);
         });
 
         // 부서 정보가 없는 직원 등록
@@ -84,8 +97,12 @@ class CriteriaSearchClientTest {
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // SELECT emp.id, emp.name, emp.salary
-        criteriaQuery.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"));
+        // SELECT emp.name, emp.salary, emp.dept.name
+        criteriaQuery.multiselect(
+                emp.get("name")     // 직원 이름
+                , emp.get("salary") // 직원 급여
+                , emp.get("dept").get("name") // 부서이름 (emp.dept.name)
+        );
 
 
         TypedQuery<Object[]> query = em.createQuery(criteriaQuery);

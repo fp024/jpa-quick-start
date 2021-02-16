@@ -25,10 +25,12 @@ public class Employee {
 
     private String title;
 
-    private String deptName;
-
     private Double salary;
 
     private Double commissionPct;
+
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
+    private Department dept;
 
 }

@@ -6,6 +6,7 @@
     <persistence-unit name="Chapter07">
 
         <class>org.fp024.jpaquick.biz.domain.Employee</class>
+        <class>org.fp024.jpaquick.biz.domain.Department</class>
 
 
         <properties>

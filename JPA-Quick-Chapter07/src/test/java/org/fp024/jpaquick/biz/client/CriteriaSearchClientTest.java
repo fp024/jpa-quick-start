@@ -10,10 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
@@ -94,6 +92,16 @@ class CriteriaSearchClientTest {
 
         CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
 
+        /** 서브쿼리 생성 */
+        Subquery<Double> subQuery = criteriaQuery.subquery(Double.class);
+
+        // FROM Employee e
+        Root<Employee> e = subQuery.from(Employee.class);
+
+        // SELECT AVG(e.salary)
+        subQuery.select(builder.avg(e.<Double>get("salary")));
+
+        /** 메인 쿼리 생성 */
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
@@ -103,17 +111,13 @@ class CriteriaSearchClientTest {
         // JOIN FETCH emp.dept dept
         emp.fetch("dept");
 
-        // ORDER BY emp.dept.name DESC, emp.salary DESC
-        javax.persistence.criteria.Order[] orderList = {
-                builder.desc(emp.get("dept").get("name"))
-                , builder.desc(emp.get("salary"))
-        };
 
-        criteriaQuery.orderBy(orderList);
+        /** 메인 쿼리에 서브쿼리 연결하기 */
+        // WHERE salary >= (서브쿼리)
+        criteriaQuery.where(builder.ge(emp.<Double>get("salary"), subQuery));
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
         query.getResultList().forEach(employee -> logger.info("---> {}", employee));
-
     }
 
     @BeforeEach

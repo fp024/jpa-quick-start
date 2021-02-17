@@ -17,6 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -157,22 +158,22 @@ class CriteriaSearchClientTest {
     @Test
     void dataSelect() {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
+        CriteriaQuery<Department> criteriaQuery = builder.createQuery(Department.class);
 
-        // FROM emp
-        Root<Employee> emp = criteriaQuery.from(Employee.class);
+        // FROM Department dept
+        Root<Department> dept = criteriaQuery.from(Department.class);
 
-        // SELECT currentDate, currentTime, currentTimestamp
-        criteriaQuery.multiselect(
-                builder.currentDate()
-                , builder.currentTime()
-                , builder.currentTimestamp()
-        );
+        // SELECT dept
+        criteriaQuery.select(dept).distinct(true);
 
-        // WHERE emp.name = '아르바이트'
-        criteriaQuery.where(builder.equal(emp.get("name"), "아르바이트"));
-        TypedQuery<Object[]> resultList = em.createQuery(criteriaQuery);
-        resultList.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
+        // JOIN FETCH
+        dept.fetch("employeeList");
+
+        // WHERE employeeList.size > 2
+        criteriaQuery.where(builder.ge(builder.size(dept.<List<Employee>>get("employeeList")), 3));
+
+        TypedQuery<Department> resultList = em.createQuery(criteriaQuery);
+        resultList.getResultList().forEach(row -> logger.info("---> {}", row));
     }
 
 

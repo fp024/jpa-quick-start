@@ -162,19 +162,15 @@ class CriteriaSearchClientTest {
         // FROM emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // SELECT abs, sqrt, mod, sum, diff, prod, quot
+        // SELECT currentDate, currentTime, currentTimestamp
         criteriaQuery.multiselect(
-                builder.abs(emp.get("salary")),         // 절댓값
-                builder.sqrt(emp.get("salary")),        // 제곱근
-                builder.mod(emp.get("salary"), 3),         // 나머지
-                builder.sum(emp.get("salary"), 100),         // 더하기
-                builder.diff(emp.get("salary"), 100),         // 빼기
-                builder.prod(emp.get("salary"), 100),         // 곱하기
-                builder.quot(emp.get("salary"), 100)         // 나누기
+                builder.currentDate()
+                , builder.currentTime()
+                , builder.currentTimestamp()
         );
 
-        // WHERE emp.name LIKE '%개발%'
-        criteriaQuery.where(builder.like(emp.get("name"), "%개발%"));
+        // WHERE emp.name = '아르바이트'
+        criteriaQuery.where(builder.equal(emp.get("name"), "아르바이트"));
         TypedQuery<Object[]> resultList = em.createQuery(criteriaQuery);
         resultList.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
     }

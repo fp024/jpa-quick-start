@@ -3,17 +3,24 @@ package org.fp024.jpaquick.biz.client;
 import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -84,24 +91,32 @@ class CriteriaSearchClientTest {
         em.getTransaction().commit();
     }
 
+
+    static Stream<Arguments> conditionAndKeyword() {
+        return Stream.of(
+                arguments("mailId", "rona"), // mailId 에 'rona' 가 포함된 직원 조회
+                arguments("name", "개발")    // name 에 '개발' 이 포함된 직원 조회
+        );
+    }
+
     @org.junit.jupiter.api.Order(2)
-    @Test
-    void dataSelect() {
+    @ParameterizedTest
+    @MethodSource("conditionAndKeyword")
+    void dataSelect(String searchCondition, String searchKeyword) {
+        // 사용자가 입력한 검색조건과 검색 단어를 이용하면 좋으나, 단위테스트 상에서는 사용이 안된다.
+        // JUnit 5에서 제공하는 파라미터를 넘겨서 테스트 하는 식으로 진행한다.
+//        Scanner keyboard = new Scanner(System.in);
+//        System.out.print("검색 조건을 입력하세요.: name 혹은 mailId");
+//        String searchCondition = keyboard.nextLine();
+//        System.out.println("검색어를 입력하세요.");
+//        String searchKeyword = keyboard.nextLine();
+
+
         // 크라이테리어 빌더 생성
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
         CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
 
-        /** 서브쿼리 생성 */
-        Subquery<Double> subQuery = criteriaQuery.subquery(Double.class);
-
-        // FROM Employee e
-        Root<Employee> e = subQuery.from(Employee.class);
-
-        // SELECT AVG(e.salary)
-        subQuery.select(builder.avg(e.<Double>get("salary")));
-
-        /** 메인 쿼리 생성 */
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
@@ -112,12 +127,26 @@ class CriteriaSearchClientTest {
         emp.fetch("dept");
 
 
-        /** 메인 쿼리에 서브쿼리 연결하기 */
-        // WHERE salary >= (서브쿼리)
-        criteriaQuery.where(builder.ge(emp.<Double>get("salary"), subQuery));
+        switch (searchCondition) {
+            case "mailId":
+            case "name":
+                // WHERE emp.mailId LIKE %searchKeyword%
+                // WHERE emp.name LIKE %searchKeyword%
+                criteriaQuery.where(builder.like(emp.get(searchCondition), "%" + searchKeyword + "%"));
+                break;
+            default:
+                fail("mailId 와 name 만 입력 가능합니다.");
+
+        }
+
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
-        query.getResultList().forEach(employee -> logger.info("---> {}", employee));
+
+        if (query.getResultList().isEmpty()) {
+            logger.info("검색결과가 없습니다.");
+        } else {
+            query.getResultList().forEach(employee -> logger.info("---> {}", employee));
+        }
     }
 
     @BeforeEach

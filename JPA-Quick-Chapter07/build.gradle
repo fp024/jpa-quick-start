@@ -30,8 +30,14 @@ dependencies {
     implementation 'org.jetbrains:annotations:20.1.0'
     implementation 'org.projectlombok:lombok:1.18.16'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    // testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    // testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    // IntelliJ에서 기본으로 만들어준 설정만으로는 아래 내용들이 없어서 추가.
+    //    org.junit.jupiter.params.ParameterizedTest
+    //    org.junit.jupiter.params.provider.Arguments
+    //    org.junit.jupiter.params.provider.MethodSource
+    testImplementation(platform('org.junit:junit-bom:5.7.1'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
 
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
@@ -39,6 +45,9 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.16'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 }
+
+
+
 
 test {
     /*

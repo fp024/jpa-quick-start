@@ -14,7 +14,6 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -163,19 +162,21 @@ class CriteriaSearchClientTest {
         // FROM emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        //emp.fetch("dept", JoinType.LEFT); 이거 안넜을 때.. CROSS JOIN (카티션 곱)이 되었다..
-
-        // SELECT concat, substring, trim, lower, upper, length, locate
+        // SELECT abs, sqrt, mod, sum, diff, prod, quot
         criteriaQuery.multiselect(
-                builder.concat(builder.concat(emp.get("name"), "의 급여"), emp.get("salary")),
-                builder.substring(emp.get("name"), 1, 2),
-                builder.trim(CriteriaBuilder.Trimspec.TRAILING, Character.valueOf('부'), emp.get("dept").get("name")),
-                builder.lower(emp.get("mailId")),
-                builder.upper(emp.get("mailId")),
-                builder.length(emp.get("mailId")),
-                builder.locate(emp.get("mailId"), "rus"));
-        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
-        query.getResultList().forEach(e -> logger.info("---> {}", Arrays.toString(e)));
+                builder.abs(emp.get("salary")),         // 절댓값
+                builder.sqrt(emp.get("salary")),        // 제곱근
+                builder.mod(emp.get("salary"), 3),         // 나머지
+                builder.sum(emp.get("salary"), 100),         // 더하기
+                builder.diff(emp.get("salary"), 100),         // 빼기
+                builder.prod(emp.get("salary"), 100),         // 곱하기
+                builder.quot(emp.get("salary"), 100)         // 나누기
+        );
+
+        // WHERE emp.name LIKE '%개발%'
+        criteriaQuery.where(builder.like(emp.get("name"), "%개발%"));
+        TypedQuery<Object[]> resultList = em.createQuery(criteriaQuery);
+        resultList.getResultList().forEach(row -> logger.info("---> {}", Arrays.toString(row)));
     }
 
 

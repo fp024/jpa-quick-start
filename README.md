@@ -26,13 +26,13 @@
 * p471 :
   * 부서정보가 없는 직원을 검색하는 것에 대해서는, dept(s_dept)에 대한 fetch 없이 s_emp.dept_id 가 NULL인 것만 확인하면 되기 때문에, 
     일부러 FETCH문을 포함할 필요가 없을 것 같습니다.
-    
+* p490 : trim 함수 사용부분에 Character.valueOf('부')로 되어있는데.. '부'로만 써도 될 것 같습니다.
 
 ## 정오표  
 * p175 : 동기화 잡업 -> 동기화 작업
 * p470 : 
   * le(), lessThanOrEqualTo() 항목
-    * 메서드은 맞는데, 값만 25400.00 에서 121500.00 으로 변경필요.
+    * 메서드는 맞는데, 값만 25400.00 에서 121500.00 으로 변경필요.
   * lessThan() 항목
     * `builder.graterThan(emp.<Double>.get("salary"), 25400.00)` -> `builder.lessThan(emp.<Double>.get("salary"), 121500.00)`
 * p474 : 주석 부분에서  `AND emp.salary >= 5000/00` 의 숫자 부분을 `35000.00` 으로 변경

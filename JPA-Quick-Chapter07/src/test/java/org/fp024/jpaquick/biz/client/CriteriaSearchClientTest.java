@@ -14,8 +14,10 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -99,10 +101,14 @@ class CriteriaSearchClientTest {
         );
     }
 
+    /**
+     * JUnit 파라미터 테스트 관련내용은 코드를 변경하지 말고 남겨둔다.
+     */
     @org.junit.jupiter.api.Order(2)
     @ParameterizedTest
+    @Disabled
     @MethodSource("conditionAndKeyword")
-    void dataSelect(String searchCondition, String searchKeyword) {
+    void dataSelect_ParameterizedTest(String searchCondition, String searchKeyword) {
         // 사용자가 입력한 검색조건과 검색 단어를 이용하면 좋으나, 단위테스트 상에서는 사용이 안된다.
         // JUnit 5에서 제공하는 파라미터를 넘겨서 테스트 하는 식으로 진행한다.
 //        Scanner keyboard = new Scanner(System.in);
@@ -136,9 +142,7 @@ class CriteriaSearchClientTest {
                 break;
             default:
                 fail("mailId 와 name 만 입력 가능합니다.");
-
         }
-
 
         TypedQuery<Employee> query = em.createQuery(criteriaQuery);
 
@@ -148,6 +152,32 @@ class CriteriaSearchClientTest {
             query.getResultList().forEach(employee -> logger.info("---> {}", employee));
         }
     }
+
+
+    @org.junit.jupiter.api.Order(2)
+    @Test
+    void dataSelect() {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
+
+        // FROM emp
+        Root<Employee> emp = criteriaQuery.from(Employee.class);
+
+        //emp.fetch("dept", JoinType.LEFT); 이거 안넜을 때.. CROSS JOIN (카티션 곱)이 되었다..
+
+        // SELECT concat, substring, trim, lower, upper, length, locate
+        criteriaQuery.multiselect(
+                builder.concat(builder.concat(emp.get("name"), "의 급여"), emp.get("salary")),
+                builder.substring(emp.get("name"), 1, 2),
+                builder.trim(CriteriaBuilder.Trimspec.TRAILING, Character.valueOf('부'), emp.get("dept").get("name")),
+                builder.lower(emp.get("mailId")),
+                builder.upper(emp.get("mailId")),
+                builder.length(emp.get("mailId")),
+                builder.locate(emp.get("mailId"), "rus"));
+        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
+        query.getResultList().forEach(e -> logger.info("---> {}", Arrays.toString(e)));
+    }
+
 
     @BeforeEach
     void beforeEach() {

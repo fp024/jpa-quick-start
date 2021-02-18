@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -67,9 +68,8 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
-        Department department = departmentService.getDepartment(Department.builder().deptId(1L).build());
-        logger.info(department.toString());
-        department.getEmployeeList().forEach(e -> logger.info("\t{}", e.getName()));
+        List<Employee> resultList = employeeService.getEmployeeList(Employee.builder().name("개발직원3").build());
+        logger.info("직원 목록");
+        resultList.forEach(e -> logger.info("\t{}", e.getName()));
     }
-
 }

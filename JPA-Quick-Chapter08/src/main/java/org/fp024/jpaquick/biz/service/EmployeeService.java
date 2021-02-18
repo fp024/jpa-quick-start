@@ -39,6 +39,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeList(Employee employee) {
-        return (List<Employee>) employeeRepository.findByName(employee.getName());
+        return (List<Employee>) employeeRepository.findByNameContaining(employee.getName());
     }
 }

@@ -20,7 +20,7 @@ public class Department {
 
     private String name;
 
-    @OneToMany(mappedBy = "dept")
+    @OneToMany(mappedBy = "dept", fetch = FetchType.EAGER)
     private final List<Employee> employeeList = new ArrayList<>();
 
 }

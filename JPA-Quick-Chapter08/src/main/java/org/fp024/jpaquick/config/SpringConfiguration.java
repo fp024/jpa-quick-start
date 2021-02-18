@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -17,9 +18,16 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Configuration
 @ComponentScan(basePackages = "org.fp024.jpaquick.biz")
 @PropertySource({"/database.properties"})
+/*
+    entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager"
+    @EnableJpaRepositories 어노테이션이 위의 속성의 빈을 찾는데, 위의 이름대로 빈이름 (메서드명)이 설정되어있으면
+    생략해도 된다.
+*/
+@EnableJpaRepositories(basePackages = "org.fp024.jpaquick.biz.repository")
 @EnableTransactionManagement
 public class SpringConfiguration {
 
@@ -39,7 +47,7 @@ public class SpringConfiguration {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean factoryBean(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(vendorAdapter());
         factoryBean.setDataSource(dataSource);
@@ -59,9 +67,9 @@ public class SpringConfiguration {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory factoryBean) {
+    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(factoryBean);
+        transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
 }

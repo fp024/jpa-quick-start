@@ -13,6 +13,7 @@ ext.javaVersion=11
 ext.projectEncoding='UTF8'
 ext.springFrameworkVersion='5.2.13.RELEASE'
 ext.aspectjVersion='1.9.6'
+ext.springDataJpaVersion='2.3.7.RELEASE'
 
 
 sourceCompatibility = "$javaVersion"
@@ -37,7 +38,10 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-context', version:"${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-aop', version:"${springFrameworkVersion}"
     implementation group: 'org.springframework', name: 'spring-orm', version:"${springFrameworkVersion}"
-    
+
+    // 스프링 JPA
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: "${springDataJpaVersion}"
+
     // AspectJ 라이브러리
     implementation group: 'org.aspectj', name: 'aspectjrt', version: "${aspectjVersion}"
     implementation group: 'org.aspectj', name: 'aspectjweaver', version: "${aspectjVersion}"

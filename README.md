@@ -7,6 +7,7 @@
 ## 책 진행에 부가적으로 진행하는하는 부분
 * h2 대신 MySQL 8.0.21 DB, OracleXE 18c 사용 
   * Hyper-V의 CentOS 8.3 가상머신에 설치, 내부 네트워크로 통신
+	* OracleXE는 CentOS 7.10에 설치
   * 4장 이전까지 MySQL, 4장중반부 부터 OracleXE 에서 테스트
 * Gradle Build 환경으로 사용
 * Slf4j & log4j2 를 사용하고 책의 Sysout 사용한 부분은 로거로서 출력.
@@ -20,7 +21,7 @@
   * 나중에 Scanner로 입력을 받는 예제가 등장하는데.. 이부분은은 JUnit5의 @ParameterizedTest 로 처리하긴했습니다.
 * Java 8 이상의 Lamda 식이나, 최신 날짜 클래스를 사용하면 좋을 것 같습니다.
    * 하이버네이트 요즘 버전에서는 Java 8의 LocalDate, LocalDateTime을 그대로 사용할 수 있음.
-   * 반복부분들을 람다식으로 바꿔봐도 좋을것 같습니다. 
+   * 반복 부분들을 람다 식으로 바꿔봐도 좋을것 같습니다. 
 * p362~365 까지 log4j 추가가 있는데, 아래 내용이 들어가거나 변경되면 좋을 것 같습니다.
   * log4j2 slf4j기반으로 가이드가 되면 좋을 것 같음.
   * 로거 이름을 org.hibernate.type 까지보다는 org.hibernate.type.descriptor.sql.BasicBinder 까지 지정하고 레빌을 TRACE 로 유지했을 때, 바인딩로그만 보여서, 괜찮음.
@@ -37,7 +38,7 @@
     * 메서드는 맞는데, 값만 25400.00 에서 121500.00 으로 변경필요.
   * lessThan() 항목
     * `builder.graterThan(emp.<Double>.get("salary"), 25400.00)` -> `builder.lessThan(emp.<Double>.get("salary"), 121500.00)`
-* p474 : 주석 부분에서  `AND emp.salary >= 5000/00` 의 숫자 부분을 `35000.00` 으로 변경
+* p474 : 주석 부분에서  `AND emp.salary >= 5000/00` 의 우변 값 부분을 `35000.00` 으로 변경
 
 
 ## 기타

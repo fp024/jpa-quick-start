@@ -67,10 +67,10 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
-        List<Employee> employeeList = employeeService.getEmployeeList(Employee.builder().build());
+        Department department = departmentService.getDepartment(Department.builder().deptId(1L).build());
+        logger.info(department.toString());
 
-        logger.info("직원 목록");
-        employeeList.forEach(e -> logger.info("{}의 부서명: {}", e.getName(), e.getDept().getName()));
+        department.getEmployeeList().forEach(e -> logger.info("\t{}", e.getName()));
     }
 
 }

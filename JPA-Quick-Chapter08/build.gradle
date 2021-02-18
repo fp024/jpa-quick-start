@@ -42,7 +42,8 @@ dependencies {
     implementation group: 'org.aspectj', name: 'aspectjrt', version: "${aspectjVersion}"
     implementation group: 'org.aspectj', name: 'aspectjweaver', version: "${aspectjVersion}"
 
-
+    // HikariCP
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.2'
 
     // IntelliJ의 문서화 또는 정적분석도구 사용한다고 한다. 넣어보라고 알림 떠서 넣어봄.
     implementation 'org.jetbrains:annotations:20.1.0'

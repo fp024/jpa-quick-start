@@ -7,13 +7,51 @@
 
     <context:component-scan base-package="org.fp024.jpaquick.biz"/>
 
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <!-- DataSource 설정 : common-dbcp 대신 hikariCP 사용. Pool에 대한 상세설정은 하지 않음.-->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg name="configuration" ref="hikariConfig"/>
+    </bean>
+
+
     <!-- JPA 구현체 -->
     <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
     <!-- Entity Manager 팩토리 -->
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <!-- packagesToScan 까지 설정했을 때, 비로소 persistence.xml 을 제거 할 수 있다. -->
+        <property name="packagesToScan" value="org.fp024.jpaquick.biz.domain" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaProperties">
+            <props>
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>-->
+                <!--
+                     MySQLDialect 라고 쓰면 테이블 생성시 type=MyISAM" 이 내용을 붙이는데, MySQL 8.0에서는 오류가난다.
+                     MySQL8Dialect 로 실행하면  engine=InnoDB 으로 테이블을 생성한다.
+
+                     type=MyISAM 설정이 MySQL 4.0부터 사용 되지 않게되었고, 5.5에는 제거되었다고 함.
+                -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.id.new_generator_mappings">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.physical_naming_strategy">org.fp024.jpaquick.common.hibernate.CustomPhysicalNamingStrategy</prop>
+
+                <!-- OracleXE로 사용시 초기화 시간이 너무 긴데 (약 30초) 아래 옵션을 넣으면.. 대폭 개선됨.  -->
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+
+            </props>
+        </property>
     </bean>
 
     <!-- Transaction 설정 -->
@@ -32,7 +70,7 @@
     <!-- Transaction AOP 설정 -->
     <aop:config>
         <aop:pointcut id="txPointcut" expression="execution(* org.fp024.jpaquick.biz.service..*Service.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
 
 

@@ -9,11 +9,11 @@ repositories {
     jcenter()
 }
 
-ext {
-    javaVersion=11
-    springFrameworkVersion='5.2.13.RELEASE'
-    projectEncoding='UTF8'
-}
+ext.javaVersion=11
+ext.projectEncoding='UTF8'
+ext.springFrameworkVersion='5.2.13.RELEASE'
+ext.aspectjVersion='1.9.6'
+
 
 sourceCompatibility = "$javaVersion"
 targetCompatibility = "$javaVersion"
@@ -35,6 +35,13 @@ dependencies {
 
     // 스프링 프레임워크 라이브러리
     implementation group: 'org.springframework', name: 'spring-context', version:"${springFrameworkVersion}"
+    implementation group: 'org.springframework', name: 'spring-aop', version:"${springFrameworkVersion}"
+    implementation group: 'org.springframework', name: 'spring-orm', version:"${springFrameworkVersion}"
+    
+    // AspectJ 라이브러리
+    implementation group: 'org.aspectj', name: 'aspectjrt', version: "${aspectjVersion}"
+    implementation group: 'org.aspectj', name: 'aspectjweaver', version: "${aspectjVersion}"
+
 
 
     // IntelliJ의 문서화 또는 정적분석도구 사용한다고 한다. 넣어보라고 알림 떠서 넣어봄.
@@ -49,6 +56,7 @@ dependencies {
     //    org.junit.jupiter.params.provider.MethodSource
     testImplementation(platform('org.junit:junit-bom:5.7.1'))
     testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation group: 'org.springframework', name: 'spring-test', version:"${springFrameworkVersion}"
 
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'

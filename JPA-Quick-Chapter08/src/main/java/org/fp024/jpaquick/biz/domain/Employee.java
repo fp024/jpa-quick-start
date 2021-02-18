@@ -3,7 +3,6 @@ package org.fp024.jpaquick.biz.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder(toBuilder = true)

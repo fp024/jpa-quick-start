@@ -39,7 +39,7 @@
   * lessThan() 항목
     * `builder.graterThan(emp.<Double>.get("salary"), 25400.00)` -> `builder.lessThan(emp.<Double>.get("salary"), 121500.00)`
 * p474 : 주석 부분에서  `AND emp.salary >= 5000/00` 의 우변 값 부분을 `35000.00` 으로 변경
-
+* p507 : 공퉁으로 -> 공통으로
 
 ## 기타
 * Gradle

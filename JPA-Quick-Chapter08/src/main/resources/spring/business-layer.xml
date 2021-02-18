@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:component-scan base-package="org.fp024.jpaquick.biz" />
+    <context:component-scan base-package="org.fp024.jpaquick.biz"/>
 
     <!-- JPA 구현체 -->
-    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
     <!-- Entity Manager 팩토리 -->
-    <bean id="entityManager"
-        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
     </bean>
 
+    <!-- Transaction 설정 -->
+    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Transaction 어드바이스 설정 -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <!-- 모든 메서드에 대해 예외가 발생하면 트랜젝션을 롤백한다. -->
+            <tx:method name="*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- Transaction AOP 설정 -->
+    <aop:config>
+        <aop:pointcut id="txPointcut" expression="execution(* org.fp024.jpaquick.biz.service..*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+    </aop:config>
+
+
+    <!--
+        JoinPoint
+            클라이언트가 호출하는 모든 비즈니스 메서드
+
+        PointCut
+            필터링된 조인 포인트
+
+        Advice
+            횡단 관심에 해당하는 공통 기능의 코드
+
+        Weaving
+            포인트컷으로 지정한 핵심 관심 메서드가 호출될 때,
+            어드바이스에 해당하는 횡단 관심 메서드가 삽입되는 과정을 의미함.
+
+        Aspect 또는 Advisor
+            Aspect = PointCut + Advise
+                어떤 PointCut 메서드에 대래서 어떤 Advice 메서드를 실행할지 결정
+
+            Advisor
+                Aspect와 의미는 같으나.. Advice 객체의 메서드이름을 확인할 수 없을 때, 사용
+    -->
 </beans>

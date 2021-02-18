@@ -52,7 +52,7 @@ public class EmployeeServiceClientTest {
                 i -> {
                     Employee employee = Employee.builder()
                             .name("영업직원" + i)
-                            .salary(i * 243.00)
+                            .salary(i * 24300.00)
                             .mailId("Sales-" + i)
                             .dept(department2).build();
                     department2.getEmployeeList().add(employee);

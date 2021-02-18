@@ -5,6 +5,7 @@ import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.fp024.jpaquick.biz.service.DepartmentService;
 import org.fp024.jpaquick.biz.service.EmployeeService;
+import org.fp024.jpaquick.config.SpringConfiguration;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import java.util.stream.IntStream;
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/spring/business-layer.xml")
+@ContextConfiguration(classes = SpringConfiguration.class)
 public class EmployeeServiceClientTest {
     @Autowired
     private DepartmentService departmentService;

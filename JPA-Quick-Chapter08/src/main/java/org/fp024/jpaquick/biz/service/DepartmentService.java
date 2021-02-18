@@ -12,8 +12,6 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    // ? 이게 지금 동작하나?
-    @Transactional
     public void insertDepartment(Department department) {
         departmentRepository.insertDepartment(department);
     }

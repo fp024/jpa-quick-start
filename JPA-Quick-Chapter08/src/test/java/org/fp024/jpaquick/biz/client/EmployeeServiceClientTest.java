@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -65,6 +65,7 @@ public class EmployeeServiceClientTest {
     }
 
     @Order(2)
+    @Transactional
     @Test
     void doSelect() {
         Department department = departmentService.getDepartment(Department.builder().deptId(1L).build());

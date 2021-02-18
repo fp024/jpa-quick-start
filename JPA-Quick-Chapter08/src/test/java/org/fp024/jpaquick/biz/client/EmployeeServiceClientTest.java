@@ -1,5 +1,6 @@
 package org.fp024.jpaquick.biz.client;
 
+import lombok.extern.slf4j.Slf4j;
 import org.fp024.jpaquick.biz.domain.Department;
 import org.fp024.jpaquick.biz.domain.Employee;
 import org.fp024.jpaquick.biz.service.DepartmentService;
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
+@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/spring/business-layer.xml")
@@ -64,7 +67,10 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
+        List<Employee> employeeList = employeeService.getEmployeeList(Employee.builder().build());
 
+        logger.info("직원 목록");
+        employeeList.forEach(e -> logger.info("{}의 부서명: {}", e.getName(), e.getDept().getName()));
     }
 
 }

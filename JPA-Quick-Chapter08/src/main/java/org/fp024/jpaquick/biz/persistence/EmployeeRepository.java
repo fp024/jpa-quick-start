@@ -36,9 +36,11 @@ public class EmployeeRepository {
 
     public List<Employee> getEmployeeList(Employee employee) {
         logger.info("===> JPA로 getEmployeeList() 기능 처리 ");
-        return entityManager.createQuery("SELECT emp FROM Employee emp ORDER BY emp.id DESC ", Employee.class).getResultList();
+        return entityManager.createQuery("SELECT emp " +
+                        "FROM Employee emp LEFT JOIN FETCH emp.dept dept " +
+                        "ORDER BY emp.id DESC "
+                , Employee.class).getResultList();
     }
-
 
 
 }

@@ -16,7 +16,7 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository){
+    public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
@@ -33,12 +33,12 @@ public class EmployeeService {
     }
 
     public Employee getEmployee(Employee employee) {
-        return employeeRepository.findById(employee.getId()).orElseThrow(() ->{
+        return employeeRepository.findById(employee.getId()).orElseThrow(() -> {
             throw new EntityNotFoundException();
         });
     }
 
     public List<Employee> getEmployeeList(Employee employee) {
-        return (List<Employee>) employeeRepository.findByNameContaining(employee.getName());
+        return (List<Employee>) employeeRepository.findByNameContainingOrMailIdContaining(employee.getName(), employee.getMailId());
     }
 }

@@ -4,6 +4,8 @@ import org.fp024.jpaquick.biz.domain.Employee;
 
 import org.fp024.jpaquick.biz.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -38,7 +40,8 @@ public class EmployeeService {
         });
     }
 
-    public List<Employee> getEmployeeList(Employee employee) {
-        return (List<Employee>) employeeRepository.findByMailIdContainingOrderByNameDesc(employee.getMailId());
+    public List<Employee> getEmployeeList(Employee employee, int pageNumber) {
+        Pageable paging = PageRequest.of(pageNumber - 1, 3);
+        return (List<Employee>) employeeRepository.findByNameContaining(employee.getName(), paging);
     }
 }

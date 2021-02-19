@@ -69,8 +69,10 @@ public class EmployeeServiceClientTest {
     @Test
     void doSelect() {
         List<Employee> resultList = employeeService.getEmployeeList(Employee.builder()
+                .name("")
                 .mailId("Dev")
-                .build());
+                .build()
+                , 2);
         logger.info("직원 목록");
         resultList.forEach(e -> logger.info("\t{}", e.getName()));
     }

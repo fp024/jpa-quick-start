@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -69,7 +68,12 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
-        List<Employee> employeeList = employeeService.getEmployeeList(Employee.builder().name("개발").build());
+        List<Employee> employeeList = employeeService.getEmployeeList(
+                Employee.builder()
+                        .name("개발")
+                        .mailId("Dev")
+                        .build()
+        );
         logger.info("[검색된 직원 목록]");
         employeeList.forEach(e -> logger.info("\t{}", e));
     }

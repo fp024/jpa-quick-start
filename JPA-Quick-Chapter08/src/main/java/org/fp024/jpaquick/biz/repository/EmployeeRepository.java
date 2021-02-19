@@ -24,4 +24,12 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
             "ORDER BY emp.id DESC")
     List<Object[]> findByJPQL(@Param("name") String name);
 
+
+    @Query(nativeQuery = true,
+            value = "SELECT id, name, salary " +
+                    "FROM s_emp " +
+                    "WHERE name LIKE CONCAT('%',?1,'%') " +
+                    "ORDER BY id DESC "
+    )
+    List<Object[]> findByNativeQuery(String name);
 }

@@ -69,29 +69,8 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
-        Page<Employee> pageResult = employeeService.getEmployeeList(Employee.builder()
-                        .name("")
-                        .mailId("Dev")
-                        .build()
-                , 2);
-
-
-        logger.info("한 페이지에 출력되는 데이터 수 : {}", pageResult.getSize());
-        logger.info("전체 페이지 수 : {}", pageResult.getTotalPages());
-        logger.info("전체 데이터 수 : {}", pageResult.getTotalElements());
-        if (pageResult.hasPrevious()) {
-            logger.info("이전 페이지 : {}", pageResult.previousPageable());
-        } else {
-            logger.info("첫 페이지 입니다.");
-        }
-
-        if (pageResult.hasNext()) {
-            logger.info("다음 페이지 : {}", pageResult.nextPageable());
-        } else {
-            logger.info("마지막 페이지 입니다.");
-        }
-
-        logger.info("[검색된 회원 목록]");
-        pageResult.getContent().forEach(e -> logger.info("\t{}", e.getName()));
+        List<Employee> employeeList = employeeService.getEmployeeList(Employee.builder().name("개발").build());
+        logger.info("[검색된 직원 목록]");
+        employeeList.forEach(e -> logger.info("\t{}", e));
     }
 }

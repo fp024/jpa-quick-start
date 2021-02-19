@@ -4,6 +4,7 @@ import org.fp024.jpaquick.biz.domain.Employee;
 
 import org.fp024.jpaquick.biz.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,7 +42,7 @@ public class EmployeeService {
         });
     }
 
-    public List<Employee> getEmployeeList(Employee employee, int pageNumber) {
+    public Page<Employee> getEmployeeList(Employee employee, int pageNumber) {
         Pageable paging = PageRequest.of(pageNumber - 1
                 , 3
                 , Sort.by(new Sort.Order(Sort.Direction.DESC, "mailId")
@@ -49,6 +50,6 @@ public class EmployeeService {
                 )
         );
 
-        return (List<Employee>) employeeRepository.findByNameContaining(employee.getName(), paging);
+        return employeeRepository.findByNameContaining(employee.getName(), paging);
     }
 }

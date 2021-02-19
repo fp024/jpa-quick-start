@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -68,12 +69,29 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
-        List<Employee> resultList = employeeService.getEmployeeList(Employee.builder()
-                .name("")
-                .mailId("Dev")
-                .build()
-                , 1);
-        logger.info("직원 목록");
-        resultList.forEach(e -> logger.info("\t{}", e.getName()));
+        Page<Employee> pageResult = employeeService.getEmployeeList(Employee.builder()
+                        .name("")
+                        .mailId("Dev")
+                        .build()
+                , 2);
+
+
+        logger.info("한 페이지에 출력되는 데이터 수 : {}", pageResult.getSize());
+        logger.info("전체 페이지 수 : {}", pageResult.getTotalPages());
+        logger.info("전체 데이터 수 : {}", pageResult.getTotalElements());
+        if (pageResult.hasPrevious()) {
+            logger.info("이전 페이지 : {}", pageResult.previousPageable());
+        } else {
+            logger.info("첫 페이지 입니다.");
+        }
+
+        if (pageResult.hasNext()) {
+            logger.info("다음 페이지 : {}", pageResult.nextPageable());
+        } else {
+            logger.info("마지막 페이지 입니다.");
+        }
+
+        logger.info("[검색된 회원 목록]");
+        pageResult.getContent().forEach(e -> logger.info("\t{}", e.getName()));
     }
 }

@@ -1,10 +1,8 @@
 package org.fp024.jpaquick.biz.service;
 
 import org.fp024.jpaquick.biz.domain.Employee;
-
 import org.fp024.jpaquick.biz.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,9 +41,7 @@ public class EmployeeService {
     }
 
     public List<Object[]> getEmployeeList(Employee employee) {
-        return employeeRepository.findByNativeQuery(employee.getName());
+        Pageable paging = PageRequest.of(0,3, Sort.Direction.DESC, "id");
+        return employeeRepository.findByJPQL(employee.getName(), paging);
     }
-
-
-
 }

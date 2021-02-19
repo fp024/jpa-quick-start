@@ -72,7 +72,7 @@ public class EmployeeServiceClientTest {
                 .name("")
                 .mailId("Dev")
                 .build()
-                , 2);
+                , 1);
         logger.info("직원 목록");
         resultList.forEach(e -> logger.info("\t{}", e.getName()));
     }

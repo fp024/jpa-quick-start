@@ -42,7 +42,13 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeList(Employee employee, int pageNumber) {
-        Pageable paging = PageRequest.of(pageNumber - 1, 3, Sort.Direction.DESC, "id");
+        Pageable paging = PageRequest.of(pageNumber - 1
+                , 3
+                , Sort.by(new Sort.Order(Sort.Direction.DESC, "mailId")
+                        , new Sort.Order(Sort.Direction.ASC, "salary")
+                )
+        );
+
         return (List<Employee>) employeeRepository.findByNameContaining(employee.getName(), paging);
     }
 }

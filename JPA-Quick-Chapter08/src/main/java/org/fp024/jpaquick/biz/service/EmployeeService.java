@@ -42,7 +42,7 @@ public class EmployeeService {
         });
     }
 
-    public List<Employee> getEmployeeList(Employee employee) {
-        return employeeRepository.findByJPQL(employee.getName(), employee.getMailId());
+    public List<Object[]> getEmployeeList(Employee employee) {
+        return employeeRepository.findByJPQL(employee.getName());
     }
 }

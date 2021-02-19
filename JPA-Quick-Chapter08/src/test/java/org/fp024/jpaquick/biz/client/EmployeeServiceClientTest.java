@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -68,13 +69,13 @@ public class EmployeeServiceClientTest {
     @Order(2)
     @Test
     void doSelect() {
-        List<Employee> employeeList = employeeService.getEmployeeList(
+        List<Object[]> rowList = employeeService.getEmployeeList(
                 Employee.builder()
                         .name("개발")
                         .mailId("Dev")
                         .build()
         );
         logger.info("[검색된 직원 목록]");
-        employeeList.forEach(e -> logger.info("\t{}", e));
+        rowList.forEach(e -> logger.info("\t{}", Arrays.toString(e)));
     }
 }

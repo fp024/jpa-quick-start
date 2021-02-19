@@ -18,10 +18,10 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     List<Employee> findByMailIdContainingOrderByNameDesc(String mailId);
 
-    @Query("SELECT emp " +
+    @Query("SELECT emp.id, emp.name, emp.salary " +
             "FROM Employee emp " +
             "WHERE emp.name LIKE %:name% " +
-            "  OR emp.mailId LIKE %:mailId% ")
-    List<Employee> findByJPQL(@Param("name") String name, @Param("mailId") String email);
+            "ORDER BY emp.id DESC")
+    List<Object[]> findByJPQL(@Param("name") String name);
 
 }

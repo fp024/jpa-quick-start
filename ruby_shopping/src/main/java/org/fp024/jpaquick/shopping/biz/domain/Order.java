@@ -68,7 +68,7 @@ public class Order {
     }
 
     // 주문 취소 처리
-    void orderCancel() {
+    public void orderCancel() {
         this.status = OrderStatus.CANCEL;
         itemList.forEach(item -> item.restoreStock());
     }

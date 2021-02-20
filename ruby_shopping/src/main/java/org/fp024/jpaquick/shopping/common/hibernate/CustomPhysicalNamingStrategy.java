@@ -43,7 +43,7 @@ public class CustomPhysicalNamingStrategy extends PhysicalNamingStrategyStandard
 
     private Identifier toSnakeCase(Identifier id) {
         if (id == null) {
-            return id;
+            return null;
         }
 
         String name = id.getText();

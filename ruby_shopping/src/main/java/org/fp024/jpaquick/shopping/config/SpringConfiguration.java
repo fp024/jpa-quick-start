@@ -2,6 +2,7 @@ package org.fp024.jpaquick.shopping.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.fp024.jpaquick.shopping.common.hibernate.CustomPhysicalNamingStrategy;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -10,7 +11,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -54,7 +54,7 @@ public class SpringConfiguration {
         properties.put("hibernate.format_sql", true);
         properties.put("hibernate.id.new_generator_mappings", true);
         properties.put("hibernate.hbm2ddl.auto", "create");
-        properties.put("hibernate.physical_naming_strategy", "org.fp024.jpaquick.shopping.common.hibernate.CustomPhysicalNamingStrategy");
+        properties.put("hibernate.physical_naming_strategy", CustomPhysicalNamingStrategy.class.getCanonicalName());
         properties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
         factoryBean.setJpaPropertyMap(properties);
 

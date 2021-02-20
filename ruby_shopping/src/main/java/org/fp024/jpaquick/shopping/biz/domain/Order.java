@@ -4,12 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(exclude = {})
+@ToString(exclude = {"customer", "searchCustomerName", "searchOrderStatus", "itemList"})
 @Entity
 @Table(name = "s_order")
 public class Order {
@@ -42,9 +44,14 @@ public class Order {
     @Transient
     private OrderStatus searchOrderStatus;
 
+    // 주문 내역 목록
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private final List<Item> itemList= new ArrayList<>();
+
     // 주문 생성자 : 주문한 회원정보를 설정한다.
-    protected Order(Customer customer) {
+    public Order(Customer customer, Item item) {
         setCustomer(customer);
+        addItem(item);
         this.status = OrderStatus.ORDER;
         this.orderDate = LocalDateTime.now();
     }
@@ -53,4 +60,17 @@ public class Order {
         customer.getOrderList().add(this);
         this.customer = customer;
     }
+
+    // 주문상품 설정 시에 주문 상품 쪽에도 양뱡향 설정
+    private void addItem(Item item) {
+        itemList.add(item);
+        item.setOrder(this);
+    }
+
+    // 주문 취소 처리
+    void orderCancel() {
+        this.status = OrderStatus.CANCEL;
+        itemList.forEach(item -> item.restoreStock());
+    }
+
 }

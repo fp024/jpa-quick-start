@@ -46,6 +46,8 @@
 * p474 : 주석 부분에서  `AND emp.salary >= 5000/00` 의 우변 값 부분을 `35000.00` 으로 변경
 * p507 : 공퉁으로 -> 공통으로
 * p609 : 영속성 유닛 설정 이름 부분 "RubbyShopping" -> "RubyShopping"
+* p624 : Hibernate 쿼리실행결과에서, Item엔티티의 테이블 명을 S_ITEM으로 설정했다면..
+  Item 엔티티의 테이블 생성구문, 외래키 설정 구문에 나타난 테이블 이름 들이 S_ITEM으로 나와야할텐데, S_ORDER_PRODUCT 로 표시되어있습니다.
 
 ## 기타
 * Gradle

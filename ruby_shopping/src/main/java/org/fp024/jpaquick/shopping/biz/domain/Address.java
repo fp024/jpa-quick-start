@@ -3,7 +3,6 @@ package org.fp024.jpaquick.shopping.biz.domain;
 import lombok.*;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 
 @Getter
 @Builder(toBuilder = true)

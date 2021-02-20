@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'org.fp024.jpaquick'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+ext.javaVersion=11
+ext.projectEncoding='UTF8'
+ext.springFrameworkVersion='5.2.13.RELEASE'
+ext.aspectjVersion='1.9.6'
+ext.springDataJpaVersion='2.3.7.RELEASE'
+ext.hibernateVersion='5.4.27.Final'
+
+ext.lombokVersion='1.18.18'
+ext.junit5Version='5.7.1'
+
+sourceCompatibility = "$javaVersion"
+targetCompatibility = "$javaVersion"
+
+compileJava.options.encoding = "$projectEncoding"
+
+tasks.withType(JavaCompile) {
+    options.encoding = "$projectEncoding"
+}
+
+dependencies {
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.0'
+
+    implementation 'mysql:mysql-connector-java:8.0.21'
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.2'
+    implementation "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+
+    // 스프링 모듈 (MVC, CONTEXT, AOP, ORM, JPA)
+    implementation group: 'org.springframework', name: 'spring-webmvc', version:"${springFrameworkVersion}"
+    implementation group: 'org.springframework', name: 'spring-context', version:"${springFrameworkVersion}"
+    implementation group: 'org.springframework', name: 'spring-aop', version:"${springFrameworkVersion}"
+    implementation group: 'org.springframework', name: 'spring-orm', version:"${springFrameworkVersion}"
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: "${springDataJpaVersion}"
+
+
+    testImplementation(platform("org.junit:junit-bom:${junit5Version}"))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation group: 'org.springframework', name: 'spring-test', version:"${springFrameworkVersion}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+test {
+    /*
+        터미널에서 테스트 클래스 실행 예시
+        > gradlew test --tests *CriteriaSearchClientTest.dataSelect
+     */
+    useJUnitPlatform()
+    // 터미널에서 테스트 실행시 테스트 실행의 콘솔 출력을 위해 추가.
+    // https://stackoverflow.com/questions/40954017/gradle-how-to-get-output-from-test-stderr-stdout-into-console
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
+}

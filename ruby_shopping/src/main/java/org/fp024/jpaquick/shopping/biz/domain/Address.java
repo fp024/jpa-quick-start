@@ -19,8 +19,4 @@ public class Address {
 
     // 우편번호
     private String zipCode;
-
-    // 회원 주소
-    @Embedded
-    private Address address;
 }

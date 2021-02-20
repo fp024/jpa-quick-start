@@ -6,6 +6,7 @@
 
     <context:component-scan base-package="org.fp024.jpaquick" >
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
     <bean class = "org.springframework.web.servlet.view.InternalResourceViewResolver">

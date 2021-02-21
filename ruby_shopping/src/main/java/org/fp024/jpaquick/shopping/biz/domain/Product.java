@@ -32,7 +32,7 @@ public class Product {
         this.quantity = this.quantity - quantity;
 
         // 재고 수량이 부족하면 예외 발생시킴
-        if (quantity < 0) {
+        if (this.quantity < 0) {
             throw new IllegalStateException("재고가 부족합니다.");
         }
     }

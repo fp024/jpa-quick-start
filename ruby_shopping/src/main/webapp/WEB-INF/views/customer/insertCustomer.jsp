@@ -3,14 +3,14 @@
 <head>
     <title>Ruby Shopping Town</title>
     <style>
-        table.new_customer {
+        table.new {
             margin-left: auto; margin-right: auto;
         }
-        table.new_customer th {
+        table.new th {
             width: 100px;
             background-color: orange;
         }
-        table.new_customer td {
+        table.new td {
             text-align: left;
         }
 
@@ -19,7 +19,7 @@
 <body>
 <jsp:include page="../layouts/header.jsp" />
 <form action="/customer/new" method="post">
-    <table class="new_customer">
+    <table class="new">
         <tr>
             <th>이름</th>
             <td><input type="text" name="name" size="20"></td>
@@ -50,7 +50,7 @@
         </tr>
 
         <tr>
-            <td colspan="2"><input type="submit" value="회원 가입"></td>
+            <td colspan="2" style="text-align: center"><input type="submit" value="회원 가입"></td>
         </tr>
     </table>
 </form>

@@ -4,19 +4,19 @@
 <head>
     <title>Ruby Shopping Town</title>
     <style>
-        table.customer_list {
+        table.list {
             margin-left: auto; margin-right: auto;
             border: 1px solid #444444;
             border-collapse: collapse;
         }
 
-        table.customer_list th {
+        table.list th {
             width: 100px;
             background-color: orange;
             border: 1px solid #444444;
 
         }
-        table.customer_list td {
+        table.list td {
             text-align: center;
             border: 1px solid #444444;
         }
@@ -25,7 +25,7 @@
 </head>
 <body>
 <jsp:include page="../layouts/header.jsp" />
-<table class="customer_list">
+<table class="list">
     <tr>
         <th>순번</th>
         <th>이름</th>

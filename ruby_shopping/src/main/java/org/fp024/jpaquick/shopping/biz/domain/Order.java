@@ -10,8 +10,8 @@ import java.util.List;
 @Getter
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(exclude = {"customer", "searchCustomerName", "searchOrderStatus", "itemList"})
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@ToString(exclude = {"customer", "itemList"})
 @Entity
 @Table(name = "s_order")
 public class Order {
@@ -70,7 +70,16 @@ public class Order {
     // 주문 취소 처리
     public void orderCancel() {
         this.status = OrderStatus.CANCEL;
-        itemList.forEach(item -> item.restoreStock());
+        itemList.forEach(Item::restoreStock);
     }
 
+    // 뷰에서 검색조건을 입력할 때... 여기선 Setter가 반드시 있어야했음.
+    public void setSearchCustomerName(String searchCustomerName) {
+        this.searchCustomerName = searchCustomerName;
+    }
+
+    // 뷰에서 검색조건을 입력할 때... 여기선 Setter가 반드시 있어야했음.
+    public void setSearchOrderStatus(OrderStatus searchOrderStatus) {
+        this.searchOrderStatus = searchOrderStatus;
+    }
 }

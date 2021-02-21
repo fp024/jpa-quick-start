@@ -7,7 +7,7 @@ group 'org.fp024.jpaquick'
 version '1.0-SNAPSHOT'
 
 task explodedWar(type: Copy) {
-    into "$buildDir/libs/exploded"
+    into "$buildDir/libs/exploded/${project.name}-${project.version}.war"
     with war
 }
 
@@ -52,6 +52,8 @@ dependencies {
 
     // JSTL 테그 라이브러리
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+    // Java 8 java.time JSP tags
+    implementation 'net.sargue:java-time-jsptags:1.1.4'
 
     testImplementation(platform("org.junit:junit-bom:${junit5Version}"))
     testImplementation('org.junit.jupiter:junit-jupiter')

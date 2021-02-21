@@ -11,7 +11,7 @@
   * 4장 이전까지 MySQL, 4장중반부 부터 OracleXE 에서 테스트
 * Gradle Build 환경으로 사용
 * Slf4j & log4j2 를 사용하고 책의 Sysout 사용한 부분은 로거로서 출력.
-* MyBatis 파트는 SqlSeesion만 만들어서 아래 /mybatis-dynamic-sql 라이브러리로 테스트
+* MyBatis 파트는 SqlSession만 만들어서 아래 /mybatis-dynamic-sql 라이브러리로 테스트
   * https://mybatis.org/mybatis-dynamic-sql/docs/quickStart.html  
 
 
@@ -47,6 +47,8 @@
 * p507 : 공퉁으로 -> 공통으로
 * p609, p636, 637 : 영속성 유닛 설정 이름 부분 "RubbyShopping" -> "RubyShopping", "RubbyShoppingClient" -> "RubyShoppingClient"
   * rubby 란 단어가 알콜중독자란 뜻이 있어서 왠만하면 고치는게 낫겠습니다.
+* p618 : reduceStock 함수에서 'if (quantity < 0)' 조건에 this를 붙여야함. this를 붙이지 않으면 파라미터 값을 사용해서 항상 양수가 되어,
+ 재고 수량 부족에대한 처리가 오동작함.
 * p624 : Hibernate 쿼리실행결과에서, Item엔티티의 테이블 명을 S_ITEM으로 설정했다면..
   Item 엔티티의 테이블 생성구문, 외래키 설정 구문에 나타난 테이블 이름 들이 S_ITEM으로 나와야할텐데, S_ORDER_PRODUCT 로 표시되어있습니다.
 

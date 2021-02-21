@@ -41,7 +41,7 @@ public class OrderRepository {
 
         if (order.getSearchCustomerName() != null) {
             // AND ord.name LIKE %order.customerName%
-            Predicate name = builder.like(ord.get("name"), "%" + order.getSearchCustomerName() + "%");
+            Predicate name = builder.like(ord.get("customer").get("name"), "%" + order.getSearchCustomerName() + "%");
             criteria.add(name);
         }
 

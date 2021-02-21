@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <!-- 스프링 설정 클래스 (비지니스 레이어)를 파라미터로 설정 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>org.fp024.jpaquick.shopping.config.SpringConfiguration</param-value>
@@ -12,6 +13,7 @@
         <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
     </context-param>
 
+    <!-- 스프링 컨테이너(비지니스 레이어)를 구동하는 ContextLoaderListener 등록 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

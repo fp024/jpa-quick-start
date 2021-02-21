@@ -1,7 +1,5 @@
 package org.fp024.jpaquick.shopping.web.controller.customer;
 
-import lombok.extern.slf4j.Slf4j;
-import org.fp024.jpaquick.shopping.biz.domain.Address;
 import org.fp024.jpaquick.shopping.biz.domain.Customer;
 import org.fp024.jpaquick.shopping.biz.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Slf4j
 @Controller
 public class CustomerController {
     private final CustomerService customerService;

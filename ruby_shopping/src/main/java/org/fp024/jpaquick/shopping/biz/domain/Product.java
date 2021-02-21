@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Getter
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @Entity
 @Table(name = "s_product")

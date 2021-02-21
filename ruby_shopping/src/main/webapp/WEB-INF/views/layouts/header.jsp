@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
+    h1 {text-align: center;}
     table.menu {
         margin-left: auto; margin-right: auto;
     }

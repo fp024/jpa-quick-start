@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString(exclude = "orderList")
 @Entity
 @Table(name = "s_customer")
@@ -37,4 +37,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private final List<Order> orderList = new ArrayList<>();
 
+    // 뷰에서 address.필드명 형식으로 form 정보를 받으려면, 해당 도메인의 Setter가 설정되야한다.
+    public void setAddress(Address address) {
+          this.address = address;
+    }
 }

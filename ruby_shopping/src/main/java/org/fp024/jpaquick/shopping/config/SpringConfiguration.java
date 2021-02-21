@@ -53,7 +53,7 @@ public class SpringConfiguration {
         properties.put("hibernate.show_sql", true);
         properties.put("hibernate.format_sql", true);
         properties.put("hibernate.id.new_generator_mappings", true);
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.physical_naming_strategy", CustomPhysicalNamingStrategy.class.getCanonicalName());
         properties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
 

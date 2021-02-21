@@ -7,7 +7,7 @@ group 'org.fp024.jpaquick'
 version '1.0-SNAPSHOT'
 
 task explodedWar(type: Copy) {
-    into "$buildDir/exploded"
+    into "$buildDir/libs/exploded"
     with war
 }
 

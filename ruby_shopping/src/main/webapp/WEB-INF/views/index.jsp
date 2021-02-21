@@ -7,7 +7,9 @@
     h1 {text-align: center;}
 </style>
 <body>
+<jsp:include page="layouts/header.jsp"/>
     <h1>루비 쇼핑몰을 이용해주셔서 감사합니다.</h1>
-    <br><br><br><br>
+    <br><br><br><br><br>
+<jsp:include page="layouts/footer.jsp"/>
 </body>
 </html>

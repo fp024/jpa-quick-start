@@ -12,6 +12,11 @@ bin
 
 # IntelliJ
 .idea
+out
 
+# JSP 변경을 즉시하려면 IntelliJ 설정에서 Artifact의 output 디렉터리를 /src/main/webapp 를 바라보게 하야하여, 이런식으로 해본다.
+# src/main 이하를 참조하게 되는게 좀 않좋아 보이기는 한데... 더 좋은 방법이 있으면 바꾸도록 하자.
+/src/main/webapp/WEB-INF/classes
+/src/main/webapp/WEB-INF/lib
 
 

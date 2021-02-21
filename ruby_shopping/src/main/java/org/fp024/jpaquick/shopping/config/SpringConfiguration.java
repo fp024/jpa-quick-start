@@ -23,7 +23,7 @@ import java.util.Map;
         @ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, ControllerAdvice.class})
 })
 @PropertySource({"classpath:database.properties"})
-@EnableTransactionManagement
+@EnableTransactionManagement // <tx:annotation-driven />
 public class SpringConfiguration {
     @Bean
     public HibernateJpaVendorAdapter vendorAdapter() {
@@ -56,6 +56,11 @@ public class SpringConfiguration {
         properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.physical_naming_strategy", CustomPhysicalNamingStrategy.class.getCanonicalName());
         properties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
+
+        // LAZY 로드시 트랜젝션 없어도 오류가 안나게 하는데... 안티패턴이라고 한다.
+        // https://suhwan.dev/2019/10/27/hibernate-detached-entity-proxy-initialization/
+        // https://vladmihalcea.com/the-hibernate-enable_lazy_load_no_trans-anti-pattern/
+        properties.put("hibernate.enable_lazy_load_no_trans", true);
         factoryBean.setJpaPropertyMap(properties);
 
         return factoryBean;

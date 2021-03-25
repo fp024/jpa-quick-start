@@ -5,10 +5,10 @@
 * [yes24 도서 판매 페이지 링크](http://www.yes24.com/Product/Goods/92287236)
 
 ## 책 진행에 부가적으로 진행하는하는 부분
-* h2 대신 MySQL 8.0.21 DB, OracleXE 18c 사용 
+* h2 대신 MySQL 8.0.21 DB, Oracle XE 18c 사용 
   * Hyper-V의 CentOS 8.3 가상머신에 설치, 내부 네트워크로 통신
-	* OracleXE는 CentOS 7.10에 설치
-  * 4장 이전까지 MySQL, 4장중반부 부터 OracleXE 에서 테스트
+	* Oracle XE는 CentOS 7.9 에 설치
+  * 4장 이전까지 MySQL, 4장중반부 부터 Oracle XE 에서 테스트
 * Gradle Build 환경으로 사용
 * Slf4j & log4j2 를 사용하고 책의 Sysout 사용한 부분은 로거로서 출력.
 * MyBatis 파트는 SqlSession만 만들어서 아래 /mybatis-dynamic-sql 라이브러리로 테스트
@@ -19,7 +19,7 @@
 * main 테스트로 테스트 대신 JUnit으로 DAO를 테스트하는 식으로 진행하면 좋을 것 같습니다.
   * 프로젝트 설정시 JUnit 4 또는 5가 기본 사용가능한 상태가 되어, 사용이 어렵지는 않을 것 같습니다.
   * 나중에 Scanner로 입력을 받는 예제가 등장하는데.. 이부분은은 JUnit5의 @ParameterizedTest 로 처리하긴했습니다.
-* Java 8 이상의 Lamda 식이나, 최신 날짜 클래스를 사용하면 좋을 것 같습니다.
+* Java 8 이상의 Lambda 식이나, 최신 날짜 클래스를 사용하면 좋을 것 같습니다.
    * 하이버네이트 요즘 버전에서는 Java 8의 LocalDate, LocalDateTime을 그대로 사용할 수 있음.
    * 반복 부분들을 람다 식으로 바꿔봐도 좋을것 같습니다. 
 * p362~365 까지 log4j 추가가 있는데, 아래 내용이 들어가거나 변경되면 좋을 것 같습니다.
@@ -64,3 +64,6 @@
     * DB에서 S_EMP와 S_DEPT를 제거하고 JPA Console로 Employee를 조회했을 때,
   테이블이 생기는것을 확인함, 그동안 못느꼈던 원인은 아마도 update되어있던 상태였태였었을 것 같다.
     
+
+## 재확인 필요
+* 연관관계에 대해서 다시봐야할 것 같다.

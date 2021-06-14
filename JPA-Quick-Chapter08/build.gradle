@@ -6,7 +6,7 @@ group 'org.fp024.jpaquick'
 version '1.0-SNAPSHOT'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 ext.javaVersion=11

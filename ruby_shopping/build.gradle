@@ -14,7 +14,7 @@ task explodedWar(type: Copy) {
 war.dependsOn explodedWar
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 ext.javaVersion=11
